@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ansem's Cuck Factory — Employee Record</title>
-<link rel="preload" href="Assets/lockerroom.webp" as="image" type="image/webp">
+<title>Ansem's Cuck Factory — Employee Record v8</title>
+<link rel="preload" href="Assets/lockeremployee.webp" as="image" type="image/webp">
 <link rel="preload" href="Assets/cuck-factory-logo.png" as="image" type="image/png">
 <style>
 :root{
@@ -42,40 +42,164 @@ button{font:inherit;cursor:pointer}
   padding:42px 5vw 64px
 }
 .eyebrow{font-size:9px;letter-spacing:.22em;color:var(--amber)}
-.layout{width:min(1240px,100%);margin:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,430px);gap:28px;align-items:start}
-.scene-card{
-  min-height:640px;border:1px solid rgba(203,148,64,.32);
-  background:linear-gradient(180deg,rgba(8,6,5,.26),rgba(8,6,5,.68));
-  display:flex;flex-direction:column;justify-content:flex-end;padding:28px
+.layout{
+  position:relative;z-index:2;
+  width:100%;min-height:calc(100vh - 72px);
+  margin:0;
+  display:block
 }
-.scene-card h1{font-family:var(--serif);font-size:clamp(46px,6vw,84px);font-weight:400;line-height:.92;margin:10px 0}
-.scene-card p{color:#cbb89d;max-width:520px;line-height:1.6;font-size:12px}
-.back{margin-top:18px;border:1px solid #c78d43;background:#17100d;color:var(--cream);padding:13px 18px;font-weight:800;letter-spacing:.08em}
+
+
+
+.back{
+  position:absolute;left:28px;bottom:26px;z-index:4;
+  margin:0;border:1px solid rgba(202,148,64,.78);
+  background:rgba(13,9,7,.88);backdrop-filter:blur(5px);
+  color:var(--cream);padding:12px 16px;font-weight:800;letter-spacing:.08em
+}
+
+
+
+
+
+
+.back:hover{background:#22140f}
+
+
+
+.archive-plaque{
+  position:absolute;left:28px;top:28px;z-index:4;
+  padding:9px 12px;
+  border:1px solid rgba(202,148,64,.42);
+  background:rgba(12,8,6,.72);
+  color:#d0a557;
+  font-size:8px;letter-spacing:.18em
+}
+.back:hover{background:#24140f}
+
+/* Personnel sheet is part of the room, not a second page floating over it */
 .record{
-  background:var(--paper);color:#2e170f;border:1px solid #a78459;
-  box-shadow:0 22px 70px rgba(0,0,0,.5)
+  position:absolute;
+  z-index:3;
+  right:3.7vw;
+  top:50%;
+  transform:translateY(-48%) rotate(-.15deg);
+  width:min(390px,31vw);
+  max-height:calc(100vh - 118px);
+  overflow:auto;
+  color:#2e170f;
+  border:1px solid #6f573d;
+  background:
+    linear-gradient(rgba(80,48,26,.035),rgba(80,48,26,.035)),
+    repeating-linear-gradient(to bottom,rgba(83,54,31,.07) 0,rgba(83,54,31,.07) 1px,transparent 1px,transparent 28px),
+    #d6c092;
+  box-shadow:0 12px 30px rgba(0,0,0,.28);
 }
-.clip{height:22px;width:96px;border:3px solid #5a4a36;border-bottom:0;border-radius:22px 22px 0 0;margin:-19px auto 0;background:#8b765b}
-.record-head{padding:15px 18px;border-bottom:2px solid var(--red);display:flex;justify-content:space-between;gap:12px;font-size:9px;font-weight:800;letter-spacing:.12em}
-.record-body{padding:20px;background:repeating-linear-gradient(to bottom,rgba(74,45,24,.08) 0,rgba(74,45,24,.08) 1px,transparent 1px,transparent 29px)}
-.record h2{font-family:var(--serif);font-size:37px;margin:0 0 17px}
-.row{display:grid;grid-template-columns:155px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid rgba(78,48,29,.18);font-size:9px}
-.row span{color:#745a3f}.row strong{text-align:right}
-.carrots{margin:18px 0 9px;border-top:1px solid rgba(78,48,29,.2);padding-top:14px}
-.carrots-label{font-size:8px;letter-spacing:.14em;color:#745a3f}
-.carrot-row{font-size:27px;letter-spacing:4px;margin-top:8px;filter:saturate(.72)}
+.record:before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.24;
+  background:
+    radial-gradient(circle at 10% 12%,rgba(91,60,35,.18) 0 1px,transparent 1.6px),
+    radial-gradient(circle at 82% 28%,rgba(91,60,35,.12) 0 1px,transparent 1.7px),
+    radial-gradient(circle at 48% 81%,rgba(91,60,35,.13) 0 1px,transparent 1.5px);
+  background-size:56px 53px,71px 67px,64px 74px
+}
+.clip{
+  height:18px;width:82px;border:3px solid #4c4338;border-bottom:0;
+  border-radius:18px 18px 0 0;margin:-17px auto 0;background:#776955
+}
+.record-head{
+  position:relative;z-index:1;
+  padding:13px 16px 12px;
+  border-bottom:2px solid #7c251f;
+  color:#2d1710;
+  display:flex;justify-content:space-between;gap:12px;
+  font-size:8px;font-weight:800;letter-spacing:.12em
+}
+.record-body{
+  position:relative;z-index:1;
+  padding:17px 18px 18px;
+  background:transparent
+}
+.record h2{
+  font-family:var(--serif);
+  font-size:34px;
+  line-height:.95;
+  margin:2px 0 16px;
+  color:#35180f
+}
+.row{
+  display:grid;grid-template-columns:138px 1fr;
+  gap:10px;padding:7px 0;
+  border-bottom:1px solid rgba(78,48,29,.20);
+  font-size:8px
+}
+.row span{color:#6e583f}
+.row strong{text-align:right;color:#2a160f}
+.carrots{margin:15px 0 8px;border-top:1px solid rgba(78,48,29,.22);padding-top:13px}
+.carrots-label{font-size:7px;letter-spacing:.14em;color:#6e583f}
+.carrot-row{font-size:23px;letter-spacing:3px;margin-top:8px;filter:saturate(.65) brightness(.92)}
 .share{
-  width:100%;margin-top:18px;border:1px solid #8d5e3c;background:linear-gradient(#9d3027,#731d18);
-  color:#fff0d4;padding:14px;font-weight:900;letter-spacing:.11em
+  width:100%;margin-top:15px;
+  border:1px solid #6f3a2e;
+  background:linear-gradient(#8c2b23,#682019);
+  color:#efe1c5;padding:13px;font-weight:900;letter-spacing:.11em
 }
-.note{margin-top:12px;color:#765e45;font-size:8px;line-height:1.55}
+.note{margin-top:10px;color:#6d5c48;font-size:7px;line-height:1.5}
+
+/* legacy record declaration overridden below */
+
+
+
+
+
+
+
+
+
+
+
+
 body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.10;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 4px)}
-@media(max-width:900px){
+@media(max-width:980px){
   .site-header{grid-template-columns:1fr auto;padding:8px 10px 0}
   .brand-lockup{width:185px;padding-bottom:8px}.header-status{border:0;margin:0;padding:0 0 8px 10px}
   .nav{grid-column:1/-1;overflow-x:auto;justify-content:flex-start;border-top:1px solid rgba(114,80,57,.35)}
   .nav button{min-width:auto;padding:0 14px;min-height:42px;font-size:8px}
-  .layout{grid-template-columns:1fr}.scene-card{min-height:330px}.record{max-width:520px}
+  .page{min-height:calc(100vh - 104px);background-position:35% center}
+  .record{
+    right:14px;top:50%;width:min(380px,44vw);
+    max-height:calc(100vh - 135px)
+  }
+  .archive-plaque{left:14px;top:14px}
+  .back{left:14px;bottom:14px}
+}
+@media(max-width:700px){
+  .page{
+    min-height:auto;
+    padding:330px 12px 18px;
+    background-size:auto 360px;
+    background-position:31% top;
+    background-repeat:no-repeat;
+    background-color:#080504
+  }
+  .page:after{box-shadow:none}
+  .layout{min-height:auto}
+  .archive-plaque{top:12px;left:12px}
+  .back{position:static;width:100%;margin:12px 0 0}
+  .record{
+    position:relative;right:auto;top:auto;transform:none;
+    width:100%;max-height:none;margin:0 auto
+  }
+  .row{grid-template-columns:120px 1fr}
+  .record h2{font-size:32px}
+}
+  .locker-image{object-position:34% center}
+  .scene-label{left:12px;top:12px}
+  .scene-actions{left:12px;right:12px;bottom:12px;display:block}
+  .locker-caption{display:none}
+  .back{width:100%}
+  .record h2{font-size:34px}
+  .row{grid-template-columns:125px 1fr}
 }
 </style>
 </head>
@@ -95,12 +219,8 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opa
 
 <main class="page">
   <div class="layout">
-    <section class="scene-card">
-      <div class="eyebrow">PERSONNEL ARCHIVE · AUTHORIZED EMPLOYEE</div>
-      <h1>YOUR<br>EMPLOYEE<br>RECORD</h1>
-      <p>Everything Management has chosen to remember about you remains permanently attached to this file.</p>
-      <div><button class="back" onclick="location.href='index.html'">← RETURN TO LOCKER ROOM</button></div>
-    </section>
+    <div class="archive-plaque">PERSONNEL ARCHIVE · ASSIGNED LOCKER</div>
+    <button class="back" onclick="location.href='index.html'">← RETURN TO LOCKER ROOM</button>
 
     <aside class="record">
       <div class="clip"></div>
@@ -117,7 +237,7 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opa
         <div class="row"><span>CUCKDROP STATUS</span><strong>ACTIVE</strong></div>
         <div class="row"><span>CUCKDROP READINESS</span><strong id="recordReadiness">98.30%</strong></div>
         <div class="carrots">
-          <div class="carrots-label">GOLDEN CARROTS · MANAGEMENT RECOGNITION</div>
+          <div class="carrots-label">GOLDEN CARROTS · LOCKER INVENTORY</div>
           <div class="carrot-row" id="carrotRow">🥕 🥕 🥕 🥕 ◌</div>
         </div>
         <button class="share" id="shareBtn">SHARE YOUR RECORD</button>
