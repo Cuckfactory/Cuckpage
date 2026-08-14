@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ansem's Cuck Factory — Employee Portal Concept v3</title>
+<title>Ansem's Cuck Factory — Employee Portal Concept v4</title>
 <link rel="preload" href="Assets/lockerroom.webp" as="image" type="image/webp">
 <link rel="preload" href="Assets/cuck-factory-logo.png" as="image" type="image/png">
 <style>
@@ -46,15 +46,70 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
 @keyframes load{to{width:100%}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-/* HEADER */
-.site-header{position:sticky;top:0;z-index:80;display:grid;grid-template-columns:minmax(220px,1fr) auto auto;align-items:center;gap:18px;padding:11px 18px;border-bottom:1px solid #5d3926;background:rgba(8,5,4,.95);backdrop-filter:blur(12px)}
-.brand-lockup{width:260px;max-width:100%;display:block}
-.nav{display:flex;align-items:center;gap:20px;color:#c7ae90;font-size:9px;letter-spacing:.14em;white-space:nowrap}
-.nav button{border:0;background:transparent;color:inherit;padding:9px 0;border-bottom:1px solid transparent}
-.nav button:hover{color:var(--cream);border-color:var(--gold)}
-.header-status{text-align:right;border-left:1px solid var(--line);padding-left:18px;min-width:165px}
-.header-status small{display:block;color:var(--muted);font-size:8px;letter-spacing:.15em}
-.header-status strong{display:block;color:var(--green);font-size:12px;margin-top:3px}
+/* HEADER — simple employee portal tabs, inspired by the original Factory layout */
+.site-header{
+  position:sticky;top:0;z-index:80;
+  display:grid;
+  grid-template-columns:minmax(230px,auto) minmax(0,1fr) minmax(190px,auto);
+  align-items:stretch;
+  min-height:72px;
+  padding:0 22px;
+  border-bottom:1px solid #5d3926;
+  background:rgba(8,5,4,.975);
+  backdrop-filter:blur(12px);
+  box-shadow:0 8px 28px rgba(0,0,0,.22)
+}
+.brand-lockup{
+  width:238px;max-width:100%;
+  align-self:center;display:block;
+  padding-right:24px
+}
+.nav{
+  display:flex;align-items:stretch;justify-content:center;
+  gap:0;
+  color:#d8c7ab;
+  font-size:10px;letter-spacing:.075em;
+  white-space:nowrap
+}
+.nav button{
+  position:relative;
+  border:0;border-left:1px solid rgba(114,80,57,.34);
+  background:transparent;color:inherit;
+  min-width:112px;
+  padding:0 17px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;
+  transition:background .18s ease,color .18s ease
+}
+.nav button:last-child{border-right:1px solid rgba(114,80,57,.34)}
+.nav button:after{
+  content:"";position:absolute;left:16px;right:16px;bottom:0;
+  height:2px;background:var(--gold);
+  transform:scaleX(0);transform-origin:center;
+  transition:transform .18s ease
+}
+.nav button:hover{
+  color:var(--cream);
+  background:linear-gradient(180deg,rgba(138,74,33,.10),rgba(138,74,33,.035))
+}
+.nav button:hover:after{transform:scaleX(1)}
+.header-status{
+  align-self:stretch;
+  display:flex;flex-direction:column;justify-content:center;
+  text-align:right;
+  border-left:1px solid var(--line);
+  padding-left:22px;margin-left:18px;
+  min-width:190px
+}
+.header-status small{
+  display:block;color:#b59b7d;
+  font-size:8px;letter-spacing:.15em;line-height:1.35
+}
+.header-status strong{
+  display:block;color:var(--green);
+  font-size:11px;letter-spacing:.08em;
+  margin-top:5px
+}
 
 /* General */
 .wrap{width:min(1440px,100%);margin:auto}
@@ -175,14 +230,45 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
 /* concept controls */
 .dev{position:fixed;left:12px;bottom:12px;z-index:1200}.dev>button{border:1px solid #493629;background:#0c0806;color:#796b5f;padding:7px 9px;font-size:8px}.dev-panel{position:absolute;left:0;bottom:35px;width:250px;padding:11px;background:#0d0907;border:1px solid var(--line);box-shadow:0 12px 45px #000}.dev-panel small{display:block;color:var(--amber);letter-spacing:.13em;margin-bottom:8px}.dev-panel button{width:100%;margin-top:6px;border:1px solid var(--line);background:#17100d;color:#d1b99d;padding:8px;font-size:8px;text-align:left}
 
+@media(max-width:1180px){
+ .site-header{grid-template-columns:minmax(190px,auto) 1fr minmax(155px,auto);padding:0 12px}
+ .brand-lockup{width:205px;padding-right:12px}
+ .nav{justify-content:flex-start;overflow-x:auto;scrollbar-width:none}
+ .nav::-webkit-scrollbar{display:none}
+ .nav button{min-width:auto;padding:0 12px;font-size:9px}
+ .header-status{min-width:155px;margin-left:8px;padding-left:12px}
+}
 @media(max-width:1050px){
- .site-header{grid-template-columns:1fr auto}.nav{display:none}.header-status{min-width:auto}
  .onboarding{grid-template-columns:1fr}.claim-roadmap{position:static;order:-1}.roadmap-note{display:none}
  .hero-content{grid-template-columns:1fr}.record-preview{justify-self:start}
  .hub-grid{grid-template-columns:1fr}.department-grid{grid-template-columns:1fr 1fr}.hub-right{grid-template-columns:1fr 1fr}.hub-right .activity-panel{grid-column:1/-1}
 }
 @media(max-width:700px){
- .site-header{padding:9px 10px}.brand-lockup{width:190px}.header-status{display:none}
+ .site-header{
+   position:sticky;
+   grid-template-columns:1fr auto;
+   min-height:auto;
+   padding:8px 10px 0
+ }
+ .brand-lockup{width:185px;padding:0 0 8px}
+ .header-status{
+   display:flex;min-width:0;margin:0;padding:0 0 8px 10px;border-left:0
+ }
+ .header-status small{font-size:7px}.header-status strong{font-size:9px}
+ .nav{
+   grid-column:1/-1;
+   order:3;
+   width:calc(100% + 20px);
+   margin-left:-10px;
+   border-top:1px solid rgba(114,80,57,.35);
+   justify-content:flex-start
+ }
+ .nav button{
+   flex:0 0 auto;
+   min-height:42px;
+   padding:0 14px;
+   font-size:8px
+ }
  .section{padding:14px}.assessment{padding:20px}.assessment-top{display:block}.progress{width:100%;max-width:none;text-align:left;margin-top:15px}.answers{grid-template-columns:1fr}.assessment-foot{display:block}.assessment-foot span{display:block;margin-top:7px}
  .registration-grid{grid-template-columns:1fr}.registration .wide{grid-column:auto}.registration-actions{display:grid}
  .employee-hero{min-height:610px;background-position:58% center}.hero-content{min-height:610px;padding:38px 14px 22px}.hero-stats{grid-template-columns:1fr 1fr}.record-preview{width:100%}
@@ -209,7 +295,7 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
     <nav class="nav" id="employeeNav">
       <button data-scroll="record">EMPLOYEE RECORD</button>
       <button data-action="invite">INVITE A CUCK</button>
-      <button data-scroll="departments">DEPARTMENTS</button>
+      <button data-scroll="departments">SHIFTS</button>
       <button data-action="cuckdrop">CUCKDROP</button>
       <button data-scroll="broadcasts">WATCH</button>
       <button data-action="buy">BUY $CUCKS</button>
