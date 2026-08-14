@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ansem's Cuck Factory — Employee Portal Concept v9</title>
+<title>Ansem's Cuck Factory — Employee Portal Concept v10</title>
 <link rel="preload" href="Assets/lockerroom.webp" as="image" type="image/webp">
 <link rel="preload" href="Assets/cuck-factory-logo.png" as="image" type="image/png">
 <style>
@@ -312,6 +312,59 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
  .result-bar{grid-template-columns:1fr auto}.result-bar span:nth-child(2){display:none}.result-bar span:last-child{text-align:right}
  .record-row{grid-template-columns:115px 1fr}.modal-body{padding:20px}.modal-big{font-size:56px}
 }
+
+@media(max-width:700px){
+  body.assessment-mode .site-header{
+    min-height:72px;
+    padding:8px 10px;
+    grid-template-columns:1fr auto;
+  }
+  body.assessment-mode .brand-lockup{
+    width:165px;
+    padding:0;
+  }
+  body.assessment-mode .header-status{
+    padding:0;
+    margin:0;
+    border-left:0;
+    min-width:130px;
+  }
+  body.assessment-mode .onboarding-shell{
+    padding:14px 10px calc(30px + env(safe-area-inset-bottom));
+    min-height:auto;
+  }
+  body.assessment-mode .onboarding{
+    display:block;
+  }
+  body.assessment-mode .claim-roadmap{
+    display:none;
+  }
+  body.assessment-mode .assessment{
+    min-height:auto;
+    padding:18px 14px 22px;
+  }
+  body.assessment-mode .assessment-title{
+    font-size:30px;
+  }
+  body.assessment-mode .question-copy{
+    margin:24px 0 16px;
+    font-size:25px;
+  }
+  body.assessment-mode .answer{
+    min-height:78px;
+    padding:13px 14px;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:rgba(202,148,64,.18);
+  }
+  body.assessment-mode .answer-text{
+    font-size:18px;
+  }
+  body.assessment-mode .assessment-foot{
+    margin-top:18px;
+    padding-top:12px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -590,8 +643,9 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
   setTimeout(routeAfterIntro, INTRO_MS-700);
 
   function startAssessment(resume=false){
+    document.body.classList.add('assessment-mode');
     $('newCuckView').classList.remove('hidden'); $('employeeView').classList.add('hidden');
-    $('employeeNav').style.visibility='hidden';
+    $('employeeNav').style.display='none';
     $('headerStatus').innerHTML='<small>FACTORY ACCESS</small><strong style="color:#c99a4a">ASSESSMENT REQUIRED</strong>';
     const saved=resume?loadOnboarding():null;
     if(saved?.draft){
@@ -632,6 +686,20 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
     ['roadStep1','roadStep2','roadStep3'].forEach((id,idx)=>{ $(id).classList.toggle('done',idx===0); $(id).classList.toggle('active',idx===1); });
   }
 
+
+  // Assessment answers are rendered dynamically, so use delegated click handling.
+  // This also avoids iOS Safari/touch issues with listeners added before the buttons exist.
+  $('answers').addEventListener('click', (event) => {
+    const button = event.target.closest('[data-answer]');
+    if (!button || button.disabled) return;
+    const index = Number(button.dataset.answer);
+    if (!Number.isInteger(index)) return;
+
+    // Prevent accidental double taps from submitting two answers.
+    [...$('answers').querySelectorAll('[data-answer]')].forEach(b => b.disabled = true);
+    selectAnswer(index);
+  });
+
   ['regHandle','regWallet','regPost'].forEach(id=>$(id).addEventListener('input',saveOnboarding));
 
   $('activateEmployeeBtn').onclick=async()=>{
@@ -665,8 +733,9 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
   };
 
   function renderEmployee(e){
+    document.body.classList.remove('assessment-mode');
     e.lastSeen=nowISO(); saveEmployee(e,'employee_seen');
-    $('newCuckView').classList.add('hidden'); $('employeeView').classList.remove('hidden'); $('employeeNav').style.visibility='visible';
+    $('newCuckView').classList.add('hidden'); $('employeeView').classList.remove('hidden'); $('employeeNav').style.display='flex';
     $('headerStatus').innerHTML=`<small>${esc(e.employeeId)} · RECORD ACTIVE</small><strong>● EMPLOYED</strong>`;
     const r=readiness(e), a=allocation(e), shiftN=(e.shifts||[]).length;
     $('welcomeHandle').textContent=e.handle; $('heroPower').textContent=fmt(e.assessment.power); $('heroShifts').textContent=shiftN; $('heroEmployeeNumber').textContent='EMPLOYEE '+e.employeeId.replace('CF-','#');
