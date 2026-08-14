@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ansem's Cuck Factory — Employee Portal Concept v5</title>
+<title>Ansem's Cuck Factory — Employee Portal Concept v9</title>
 <link rel="preload" href="Assets/lockerroom.webp" as="image" type="image/webp">
 <link rel="preload" href="Assets/cuck-factory-logo.png" as="image" type="image/png">
 <style>
@@ -175,18 +175,18 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
 /* EMPLOYEE HUB */
 .employee-main{background:#0b0706}
 /* Returning employees land inside the canonical employee zone. Production asset: Assets/lockerroom.webp */
-.employee-hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);min-height:620px;background-color:#11110f;background-image:url("Assets/lockerroom.webp");background-size:cover;background-position:center 45%;background-repeat:no-repeat}
+.employee-hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);min-height:620px;background-color:#11110f;background-image:url("Assets/lockerroom.webp");background-size:cover;background-position:38% 45%;background-repeat:no-repeat}
 /* Darken the UI zones while deliberately leaving the central worker readable. */
 .employee-hero:before{content:"";position:absolute;inset:0;pointer-events:none;background:
  linear-gradient(90deg,rgba(5,4,3,.97) 0%,rgba(6,5,4,.92) 24%,rgba(6,5,4,.66) 38%,rgba(6,5,4,.12) 53%,rgba(6,5,4,.18) 66%,rgba(6,5,4,.61) 82%,rgba(5,4,3,.84) 100%),
  linear-gradient(0deg,rgba(5,4,3,.86) 0%,rgba(5,4,3,.34) 34%,rgba(5,4,3,.04) 67%,rgba(5,4,3,.22) 100%)}
 .employee-hero:after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 -90px 100px rgba(5,3,2,.72),inset 0 0 120px rgba(0,0,0,.30)}
-.hero-content{position:relative;z-index:2;width:min(1440px,100%);min-height:620px;margin:auto;padding:64px 5.8vw 54px;display:flex;align-items:flex-end}
-.welcome-card{max-width:730px}
-.welcome-handle{font-family:var(--serif);font-size:clamp(58px,7vw,103px);line-height:.88;letter-spacing:-.045em;margin:12px 0 18px}
-.welcome-sub{color:#c8b294;font-size:13px;line-height:1.6;max-width:660px}
-.hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:23px;max-width:700px}
-.stat{padding:15px 16px;border:1px solid rgba(213,177,105,.35);background:rgba(10,7,5,.76);backdrop-filter:blur(6px)}
+.hero-content{position:relative;z-index:2;width:min(1440px,100%);min-height:calc(100vh - 72px);margin:auto;padding:34px 5.5vw 34px;display:flex;align-items:center}
+.welcome-card{max-width:610px}
+.welcome-handle{font-family:var(--serif);font-size:clamp(44px,5vw,74px);line-height:.9;letter-spacing:-.035em;margin:8px 0 8px}
+.welcome-sub{color:#c8b294;font-size:11px;line-height:1.55;max-width:530px}
+.hero-stats{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr);gap:10px;margin-top:16px;max-width:610px}
+.stat{border:1px solid rgba(213,177,105,.42);background:rgba(10,7,5,.82);backdrop-filter:blur(7px)}
 .stat small{display:block;color:var(--muted);font-size:8px;letter-spacing:.14em}.stat strong{display:block;font-family:var(--serif);font-size:clamp(27px,3vw,44px);font-weight:400;margin-top:5px}.stat .active{color:var(--green)}
 .hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
 
@@ -209,7 +209,7 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
 .welcome-sub{max-width:600px}
 .hero-stats{max-width:610px}
 .home-note{
-  margin-top:16px;color:#8f7b66;font-size:8px;letter-spacing:.13em;
+  margin-top:10px;color:#8f7b66;font-size:8px;letter-spacing:.13em;
   text-transform:uppercase
 }
 .home-footer{
@@ -219,6 +219,35 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
   background:linear-gradient(180deg,transparent,rgba(5,3,2,.80));
   color:#8c7761;font-size:8px;letter-spacing:.14em
 }
+
+
+
+
+.cuckpower-card{padding:18px 20px;min-height:128px;display:flex;flex-direction:column;justify-content:center}
+.cuckpower-card strong{font-size:clamp(42px,4.8vw,66px)!important}
+.cuckpower-rise{color:var(--green);font-size:.54em;margin-left:7px;vertical-align:.13em}
+.status-stack{display:grid;grid-template-rows:1fr 1fr;min-height:128px}
+.status-block{padding:14px 17px;display:flex;flex-direction:column;justify-content:center}
+.status-block + .status-block{border-top:1px solid rgba(213,177,105,.34)}
+.status-block strong{font-size:clamp(26px,3vw,40px)!important;margin-top:4px!important}
+.status-block .active{color:var(--green)}
+.status-detail{margin-top:5px;color:#8f7b66;font-size:7px;letter-spacing:.12em}
+.employee-number{color:#9b856d;font-size:8px;letter-spacing:.15em;margin-top:3px}
+.earn-card{
+  margin-top:10px;max-width:610px;
+  border:1px solid rgba(199,141,67,.76);
+  background:linear-gradient(180deg,rgba(103,31,24,.88),rgba(63,20,17,.92));
+  padding:15px 20px;text-align:center;
+  transition:filter .18s ease,transform .18s ease
+}
+.earn-card:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.earn-title{font-family:var(--serif);font-size:25px;line-height:1;color:#f2e2c5}
+.earn-sub{margin-top:6px;color:#bca68b;font-size:8px;letter-spacing:.04em}
+.employee-record-link{
+  display:inline-block;margin-top:9px;padding:0;border:0;background:transparent;
+  color:#a98e72;font-size:8px;letter-spacing:.13em;text-transform:uppercase
+}
+.employee-record-link:hover{color:var(--cream)}
 
 /* modals */
 .modal-wrap{position:fixed;inset:0;z-index:900;display:grid;place-items:center;padding:18px;background:rgba(0,0,0,.84)}
@@ -230,6 +259,13 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
 /* concept controls */
 .dev{position:fixed;left:12px;bottom:12px;z-index:1200}.dev>button{border:1px solid #493629;background:#0c0806;color:#796b5f;padding:7px 9px;font-size:8px}.dev-panel{position:absolute;left:0;bottom:35px;width:250px;padding:11px;background:#0d0907;border:1px solid var(--line);box-shadow:0 12px 45px #000}.dev-panel small{display:block;color:var(--amber);letter-spacing:.13em;margin-bottom:8px}.dev-panel button{width:100%;margin-top:6px;border:1px solid var(--line);background:#17100d;color:#d1b99d;padding:8px;font-size:8px;text-align:left}
 
+
+@media(min-width:1051px){
+  .employee-hero{background-position:38% 45%}
+  .hero-content{align-items:flex-start;padding-top:11vh}
+  .welcome-card{margin-top:0}
+}
+
 @media(max-width:1180px){
  .site-header{grid-template-columns:minmax(190px,auto) 1fr minmax(155px,auto);padding:0 12px}
  .brand-lockup{width:205px;padding-right:12px}
@@ -239,6 +275,8 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
  .header-status{min-width:155px;margin-left:8px;padding-left:12px}
 }
 @media(max-width:1050px){
+ .employee-hero{background-position:43% 45%}
+
  .onboarding{grid-template-columns:1fr}.claim-roadmap{position:static;order:-1}.roadmap-note{display:none}
  
 }
@@ -270,7 +308,7 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
  }
  .section{padding:14px}.assessment{padding:20px}.assessment-top{display:block}.progress{width:100%;max-width:none;text-align:left;margin-top:15px}.answers{grid-template-columns:1fr}.assessment-foot{display:block}.assessment-foot span{display:block;margin-top:7px}
  .registration-grid{grid-template-columns:1fr}.registration .wide{grid-column:auto}.registration-actions{display:grid}
- .employee-hero{min-height:calc(100vh - 104px);background-position:58% center}.hero-content{min-height:calc(100vh - 104px);padding:38px 14px 36px}.hero-stats{grid-template-columns:1fr 1fr}
+ .employee-hero{min-height:calc(100vh - 104px);background-position:58% center}.hero-content{min-height:calc(100vh - 104px);padding:28px 14px 30px;align-items:flex-start}.hero-stats{grid-template-columns:1fr}.status-stack{min-height:118px}
  .result-bar{grid-template-columns:1fr auto}.result-bar span:nth-child(2){display:none}.result-bar span:last-child{text-align:right}
  .record-row{grid-template-columns:115px 1fr}.modal-body{padding:20px}.modal-big{font-size:56px}
 }
@@ -363,19 +401,36 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
         <div class="welcome-card">
           <div class="eyebrow">EMPLOYEE PORTAL · SECURE ACCESS</div>
           <div class="welcome-handle">WELCOME BACK,<br><span id="welcomeHandle">@CUCK</span></div>
-          <div class="welcome-sub">Management has preserved your previous labour. Your assessment, shifts, scores, loyalty and future requirements remain attached to this record.</div>
+          <div class="employee-number" id="heroEmployeeNumber">EMPLOYEE #00000</div>
 
           <div class="hero-stats">
-            <div class="stat"><small>CUCKPOWER</small><strong id="heroPower">10,020</strong></div>
-            <div class="stat cuckdrop-open"><small>CUCKDROP STATUS</small><strong class="active">ACTIVE</strong></div>
-            <div class="stat"><small>SHIFTS COMPLETED</small><strong id="heroShifts">0</strong></div>
-            <div class="stat"><small>LOYALTY CREDIT</small><strong id="heroLoyalty">+1</strong></div>
+            <div class="stat cuckpower-card">
+              <small>CUCKPOWER</small>
+              <strong><span id="heroPower">10,020</span><span class="cuckpower-rise">↑</span></strong>
+            </div>
+
+            <div class="stat status-stack">
+              <div class="status-block cuckdrop-open">
+                <small>CUCKDROP STATUS</small>
+                <strong class="active">ACTIVE</strong>
+                <div class="status-detail">CLICK FOR DETAILS</div>
+              </div>
+              <div class="status-block">
+                <small>SHIFTS COMPLETED</small>
+                <strong id="heroShifts">0</strong>
+              </div>
+            </div>
           </div>
 
-          <div class="hero-actions">
-            <button class="primary" data-page="employee-record.html">VIEW EMPLOYEE RECORD</button>
-            <button class="secondary" data-action="shifts">START NEXT SHIFT</button>
+          <button class="earn-card" data-action="shifts">
+            <div class="earn-title">EARN MORE</div>
+            <div class="earn-sub">Increase your Cuckpower. Get closer.</div>
+          </button>
+
+          <div>
+            <button class="employee-record-link" data-page="employee-record.html">VIEW EMPLOYEE RECORD</button>
           </div>
+
           <div class="home-note">Your file remains active until Management decides otherwise.</div>
         </div>
       </div>
@@ -614,7 +669,7 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
     $('newCuckView').classList.add('hidden'); $('employeeView').classList.remove('hidden'); $('employeeNav').style.visibility='visible';
     $('headerStatus').innerHTML=`<small>${esc(e.employeeId)} · RECORD ACTIVE</small><strong>● EMPLOYED</strong>`;
     const r=readiness(e), a=allocation(e), shiftN=(e.shifts||[]).length;
-    $('welcomeHandle').textContent=e.handle; $('heroPower').textContent=fmt(e.assessment.power); $('heroShifts').textContent=shiftN; $('heroLoyalty').textContent='+'+(e.loyalty||1);
+    $('welcomeHandle').textContent=e.handle; $('heroPower').textContent=fmt(e.assessment.power); $('heroShifts').textContent=shiftN; $('heroEmployeeNumber').textContent='EMPLOYEE '+e.employeeId.replace('CF-','#');
     renderModals(e);
   }
   function renderModals(e){
@@ -628,31 +683,47 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
     $('eligibilityChecks').innerHTML=checks.map(x=>`<div class="check"><b>${x[0]}</b><span>${x[1]}</span><em>${x[2]}</em></div>`).join('');
   }
 
-  function simulateShift(type){
-    const e=loadEmployee(); if(!e)return;
-    const score = type==='typing' ? Math.floor(5600+Math.random()*3900) : Math.floor(4200+Math.random()*5200);
-    const label = type==='typing'?'VOLUNTARY LABOUR SHIFT RECORDED':'COMMUNITY GROWTH SHIFT RECORDED';
-    e.shifts ||= []; e.shifts.push({id:'SHIFT-'+Date.now(),type,score,at:nowISO()}); e.loyalty=(e.loyalty||1)+1;
-    logEvent(e,'shift',label,`${fmt(score)} ${type==='typing'?'Factory Score':'Community Value'} · Loyalty +1`); saveEmployee(e,'shift_completed'); renderEmployee(e); showToast('Shift saved to employee record. Eligibility improved without becoming conclusive.');
-  }
+  // Homepage navigation. Dedicated pages can be wired here without bloating the returning-user home.
+  [...document.querySelectorAll('[data-page]')].forEach(el=>el.addEventListener('click',()=>{
+    trackFactoryEvent('page_open',{page:el.dataset.page});
+    location.href=el.dataset.page;
+  }));
 
-  [...document.querySelectorAll('[data-game]')].forEach(btn=>btn.onclick=()=>{
-    trackFactoryEvent('shift_opened',{department:btn.dataset.game});
-    showToast(`Concept hook: this button should open ${btn.dataset.game==='typing'?'Department 01 (WPM game)':'Department 02 (Organic Community Growth)'} and write the completed result back into this employee record.`);
-  });
-  [...document.querySelectorAll('[data-action]')].forEach(btn=>btn.onclick=()=>{
-    const a=btn.dataset.action;
-    if(a==='cuckdrop'){ trackFactoryEvent('cuckdrop_opened'); openModal('cuckdropModal'); }
-    else if(a==='record'){ trackFactoryEvent('employee_record_opened'); openModal('recordModal'); }
-    else if(a==='invite') document.getElementById('inviteLink')?.scrollIntoView({behavior:'smooth',block:'center'});
-    else if(a==='buy') showToast('BUY $CUCKS destination placeholder. Keep the employee hub as the home base after purchase.');
-  });
-  [...document.querySelectorAll('[data-scroll]')].forEach(btn=>btn.onclick=()=>document.getElementById(btn.dataset.scroll)?.scrollIntoView({behavior:'smooth',block:'start'}));
-  [...document.querySelectorAll('.cuckdrop-open')].forEach(x=>x.onclick=()=>openModal('cuckdropModal'));
-  function openModal(id){ $(id).classList.remove('hidden'); document.body.style.overflow='hidden'; }
-  function closeModal(id){ $(id).classList.add('hidden'); document.body.style.overflow=''; }
-  [...document.querySelectorAll('[data-close]')].forEach(b=>b.onclick=()=>closeModal(b.dataset.close));
-  [...document.querySelectorAll('.modal-wrap')].forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));trackFactoryEvent('invite_link_copied');showToast('Recruitment link copied. Management appreciates your network.')}catch{showToast('Copy unavailable here. Select the recruitment link manually.')} };
+  [...document.querySelectorAll('[data-action]')].forEach(el=>el.addEventListener('click',()=>{
+    const action=el.dataset.action;
+    if(action==='cuckdrop'){
+      trackFactoryEvent('cuckdrop_opened');
+      openModal('cuckdropModal');
+    }else if(action==='invite'){
+      trackFactoryEvent('invite_opened');
+      showToast('Dedicated INVITE A CUCK page will open here.');
+    }else if(action==='shifts'){
+      trackFactoryEvent('shifts_opened');
+      showToast('Dedicated SHIFTS page will open here.');
+    }else if(action==='watch'){
+      trackFactoryEvent('watch_opened');
+      showToast('Dedicated WATCH page will open here.');
+    }else if(action==='buy'){
+      trackFactoryEvent('buy_opened');
+      showToast('BUY $CUCKS destination placeholder.');
+    }
+  }));
+
+  [...document.querySelectorAll('.cuckdrop-open')].forEach(x=>x.addEventListener('click',()=>{
+    trackFactoryEvent('cuckdrop_opened');
+    openModal('cuckdropModal');
+  }));
+
+  function openModal(id){
+    const modal=$(id); if(!modal)return;
+    modal.classList.remove('hidden'); document.body.style.overflow='hidden';
+  }
+  function closeModal(id){
+    const modal=$(id); if(!modal)return;
+    modal.classList.add('hidden'); document.body.style.overflow='';
+  }
+  [...document.querySelectorAll('[data-close]')].forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.close)));
+  [...document.querySelectorAll('.modal-wrap')].forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
 
   // Concept controls
   $('devToggle').onclick=()=>$('devPanel').classList.toggle('hidden');
