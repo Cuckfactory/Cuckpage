@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ansem's Cuck Factory — Employee Record v9</title>
+<title>Ansem's Cuck Factory — Employee Record v11</title>
 <link rel="preload" href="Assets/lockeremployee.webp" as="image" type="image/webp">
 <link rel="preload" href="Assets/cuck-factory-logo.png" as="image" type="image/png">
 <style>
@@ -59,6 +59,28 @@ img{display:block;max-width:100%}
   content:"";position:absolute;inset:0;pointer-events:none;opacity:.1;
   background:repeating-linear-gradient(to bottom,rgba(255,255,255,.028) 0,rgba(255,255,255,.028) 1px,transparent 1px,transparent 4px)
 }
+
+.scene-bg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+  z-index:0;
+  user-select:none;
+  pointer-events:none;
+}
+.scene-shade{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(5,4,3,.05) 0%,rgba(5,4,3,.02) 55%,rgba(5,4,3,.18) 78%,rgba(5,4,3,.34) 100%),
+    linear-gradient(180deg,rgba(5,4,3,.03),rgba(5,4,3,.20));
+}
+
 .page:after{
   content:"";position:absolute;inset:0;pointer-events:none;
   box-shadow:inset 0 0 160px rgba(0,0,0,.62)
@@ -157,7 +179,7 @@ img{display:block;max-width:100%}
   <nav class="nav">
     <button onclick="location.href='index.html'">HOME</button>
     <button onclick="location.href='employee-record.html'">EMPLOYEE RECORD</button>
-    <button id="shiftsBtn">SHIFTS</button>
+    <button onclick="location.href='shifts/'">SHIFTS</button>
     <button id="cuckdropBtn">CUCKDROP</button>
     <button id="watchBtn">WATCH</button>
     <button id="buyBtn">BUY $CUCKS</button>
@@ -313,8 +335,6 @@ img{display:block;max-width:100%}
       setTimeout(()=>URL.revokeObjectURL(a.href),500);
     };
   }
-
-  $('shiftsBtn').onclick=()=>alert('Dedicated SHIFTS page will open here.');
   $('cuckdropBtn').onclick=()=>alert('Cuckdrop status page will open here.');
   $('watchBtn').onclick=()=>alert('Factory broadcasts will open here.');
   $('buyBtn').onclick=()=>alert('BUY $CUCKS destination will open here.');
