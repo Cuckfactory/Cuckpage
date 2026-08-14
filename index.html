@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ansem's Cuck Factory — Employee Portal v11 · Shifts Integrated</title>
+<link rel="preload" href="Assets/lockerroom.webp" as="image" type="image/webp">
+<link rel="preload" href="Assets/cuck-factory-logo.png" as="image" type="image/png">
+<script src="config.js"></script>
+<style>
+:root{
+  --ink:#0b0706; --ink2:#120b09; --panel:#16100d; --panel2:#1d1511;
+  --paper:#efe4c7; --paper2:#e3d1aa; --cream:#f5ead0; --muted:#a98e72;
+  --red:#8f211b; --red2:#b03a28; --amber:#ca9440; --gold:#e3bd68;
+  --green:#839867; --bad:#c95c4d; --line:#4b3224; --line2:#725039;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --serif: Georgia, "Times New Roman", serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--ink);color:var(--cream)}
+body{font-family:var(--mono);background:
+  radial-gradient(circle at 50% -20%, rgba(150,72,32,.20), transparent 38%),
+  linear-gradient(#0b0706,#080504 65%,#050302);}
+button,input{font:inherit}
+button{cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.45}
+a{color:inherit;text-decoration:none}
+.hidden{display:none!important}
+
+/* scanline + grain */
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.12;
+ background:repeating-linear-gradient(to bottom,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 4px);mix-blend-mode:screen}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opacity:.065;
+ background-image:radial-gradient(rgba(255,255,255,.7) .4px,transparent .6px);background-size:5px 5px}
+
+/* INTRO — production note: this is only a routing mock. Keep the existing real intro animation. */
+.intro{position:fixed;inset:0;z-index:2000;background:#050302;display:grid;place-items:center;overflow:hidden}
+.intro:before{content:"";position:absolute;inset:-25%;background:radial-gradient(circle,rgba(185,111,45,.14),transparent 35%);animation:breathe 2.2s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.12);opacity:.55}}
+.intro-inner{position:relative;width:min(720px,88vw);text-align:center}
+.intro-mark{width:min(460px,75vw);height:auto;opacity:0;filter:brightness(.96);animation:introMark 1.2s .1s ease forwards}
+@keyframes introMark{to{opacity:1}}
+.intro-kicker{margin-top:22px;color:var(--amber);font-size:10px;letter-spacing:.34em;opacity:0;animation:fadeUp .5s .6s ease forwards}
+.intro-status{margin-top:9px;font-family:var(--serif);font-size:clamp(18px,3vw,27px);font-style:italic;opacity:0;animation:fadeUp .55s .9s ease forwards}
+.intro-bar{height:3px;margin:28px auto 0;max-width:420px;background:#2a1912;overflow:hidden;border:1px solid #3d291f}
+.intro-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--gold));animation:load 2.25s .35s ease forwards}
+@keyframes load{to{width:100%}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* HEADER — simple employee portal tabs, inspired by the original Factory layout */
+.site-header{
+  position:sticky;top:0;z-index:80;
+  display:grid;
+  grid-template-columns:minmax(230px,auto) minmax(0,1fr) minmax(190px,auto);
+  align-items:stretch;
+  min-height:72px;
+  padding:0 22px;
+  border-bottom:1px solid #5d3926;
+  background:rgba(8,5,4,.975);
+  backdrop-filter:blur(12px);
+  box-shadow:0 8px 28px rgba(0,0,0,.22)
+}
+.brand-lockup{
+  width:238px;max-width:100%;
+  align-self:center;display:block;
+  padding-right:24px
+}
+.nav{
+  display:flex;align-items:stretch;justify-content:center;
+  gap:0;
+  color:#d8c7ab;
+  font-size:10px;letter-spacing:.075em;
+  white-space:nowrap
+}
+.nav button{
+  position:relative;
+  border:0;border-left:1px solid rgba(114,80,57,.34);
+  background:transparent;color:inherit;
+  min-width:112px;
+  padding:0 17px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;
+  transition:background .18s ease,color .18s ease
+}
+.nav button:last-child{border-right:1px solid rgba(114,80,57,.34)}
+.nav button:after{
+  content:"";position:absolute;left:16px;right:16px;bottom:0;
+  height:2px;background:var(--gold);
+  transform:scaleX(0);transform-origin:center;
+  transition:transform .18s ease
+}
+.nav button:hover{
+  color:var(--cream);
+  background:linear-gradient(180deg,rgba(138,74,33,.10),rgba(138,74,33,.035))
+}
+.nav button:hover:after{transform:scaleX(1)}
+.header-status{
+  align-self:stretch;
+  display:flex;flex-direction:column;justify-content:center;
+  text-align:right;
+  border-left:1px solid var(--line);
+  padding-left:22px;margin-left:18px;
+  min-width:190px
+}
+.header-status small{
+  display:block;color:#b59b7d;
+  font-size:8px;letter-spacing:.15em;line-height:1.35
+}
+.header-status strong{
+  display:block;color:var(--green);
+  font-size:11px;letter-spacing:.08em;
+  margin-top:5px
+}
+
+/* General */
+.wrap{width:min(1440px,100%);margin:auto}
+.section{padding:24px}
+.frame{border:1px solid var(--line);background:linear-gradient(180deg,rgba(28,18,14,.98),rgba(13,8,6,.98));box-shadow:inset 0 0 35px rgba(0,0,0,.28)}
+.eyebrow{font-size:9px;letter-spacing:.24em;color:var(--amber);text-transform:uppercase}
+.h1{font-family:var(--serif);font-size:clamp(44px,7vw,94px);line-height:.88;letter-spacing:-.04em;margin:13px 0 12px;font-weight:500}
+.h2{font-family:var(--serif);font-size:clamp(29px,4vw,48px);margin:0;font-weight:500}
+.copy{color:#cdb99e;line-height:1.65;font-size:13px}
+.primary,.secondary,.paper-btn{border:1px solid #c78d43;padding:14px 20px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.primary{background:linear-gradient(#a83227,#781d18);color:#fff0d4;box-shadow:inset 0 0 0 1px rgba(255,255,255,.025)}
+.primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.secondary{background:#17100d;color:var(--cream);border-color:var(--line2)}
+.secondary:hover{border-color:var(--amber)}
+.paper-btn{background:#e9d9b9;color:#2b150f;border-color:#9a7652}
+
+/* NEW CUCK / assessment */
+.onboarding-shell{min-height:calc(100vh - 68px);padding:34px 20px 70px;background:
+  linear-gradient(rgba(9,6,5,.76),rgba(9,6,5,.92)),
+  radial-gradient(circle at 50% 0,rgba(203,148,64,.18),transparent 33%)}
+.onboarding{width:min(1180px,100%);margin:auto;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.6fr);gap:14px}
+.assessment{padding:30px;min-height:610px;position:relative;overflow:hidden}
+.assessment:before{content:"";position:absolute;top:0;left:0;right:0;height:8px;background:repeating-linear-gradient(135deg,#8f211b 0 14px,#d3a154 14px 28px,#efe4c7 28px 38px)}
+.assessment-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-top:9px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.question-number{color:var(--amber);font-size:10px;letter-spacing:.18em}
+.assessment-title{font-family:var(--serif);font-size:clamp(34px,5vw,64px);line-height:.98;margin:15px 0 0}
+.progress{width:220px;max-width:32vw;text-align:right}
+.progress small{color:var(--muted);font-size:8px;letter-spacing:.13em}
+.progress-track{height:6px;border:1px solid var(--line);background:#080504;margin-top:8px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));width:16.67%;transition:width .35s ease}
+.question-copy{font-family:var(--serif);font-size:clamp(24px,3vw,38px);line-height:1.18;margin:34px 0 23px;max-width:850px}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.answer{min-height:92px;text-align:left;padding:15px 16px;border:1px solid var(--line);background:linear-gradient(#19110e,#100a08);color:#e5d4ba;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
+.answer:hover{border-color:var(--amber);transform:translateY(-1px)}
+.answer-key{width:28px;height:28px;display:grid;place-items:center;border:1px solid #795437;color:var(--amber);font-weight:800}
+.answer-text{font-family:var(--serif);font-size:17px;line-height:1.35}
+.assessment-foot{margin-top:26px;padding-top:15px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;color:var(--muted);font-size:9px;letter-spacing:.1em}
+.claim-roadmap{padding:22px;align-self:start;position:sticky;top:86px}
+.roadmap-title{font-family:var(--serif);font-size:27px;margin:5px 0 17px}
+.step{display:grid;grid-template-columns:33px 1fr;gap:11px;padding:14px 0;border-top:1px solid var(--line)}
+.step-n{width:29px;height:29px;border:1px solid var(--line2);display:grid;place-items:center;color:var(--amber)}
+.step strong{display:block;font-size:10px;letter-spacing:.08em}.step span{display:block;color:var(--muted);font-size:9px;margin-top:4px;line-height:1.45}
+.step.active .step-n{background:var(--red);color:#fff;border-color:var(--gold)}
+.step.done .step-n{background:#394631;color:#dfe8d0;border-color:#637751}
+.roadmap-note{margin-top:18px;padding:13px;border-left:2px solid var(--amber);background:rgba(112,65,34,.18);font-family:var(--serif);font-style:italic;color:#d8c4a4;line-height:1.45}
+
+/* result + registration */
+.assessment-result{margin-top:22px;border:1px solid #8f6d43;background:var(--paper);color:#2b150f;box-shadow:0 25px 60px rgba(0,0,0,.35)}
+.result-bar{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;padding:11px 15px;background:var(--red);color:#f6e6bf;border-bottom:2px solid var(--amber);font-size:9px;font-weight:800;letter-spacing:.14em}
+.result-bar span:nth-child(2){text-align:center}.result-bar span:last-child{text-align:right}
+.result-body{padding:26px 28px;background:repeating-linear-gradient(to bottom,rgba(106,75,41,.055) 0,rgba(106,75,41,.055) 1px,transparent 1px,transparent 29px),var(--paper)}
+.result-body{text-align:center}.result-kicker{font-size:9px;letter-spacing:.23em;color:#785b3d;font-weight:800}
+.classification{font-family:var(--serif);font-size:clamp(45px,7vw,82px);line-height:.9;color:var(--red);margin:11px 0 19px}
+.power-label{font-size:10px;letter-spacing:.22em;color:#785b3d;font-weight:800}.power{font-family:var(--serif);font-size:64px;line-height:1;margin:5px 0}
+.result-tagline{font-size:8px;letter-spacing:.13em;color:#785b3d;margin-top:12px}
+.registration{margin-top:16px;padding:22px;border:1px solid var(--paper2);background:#f2e8d0;color:#2b150f;text-align:left}
+.registration-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.field label{display:block;font-size:8px;font-weight:800;letter-spacing:.16em;color:#795d40;margin:0 0 7px}
+.field input{width:100%;border:1px solid #ad8961;background:#fff9ea;color:#2b150f;padding:13px 12px;outline:none}
+.field input:focus{border-color:var(--red)}
+.registration .wide{grid-column:1/-1}.registration-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px}.registration-help{font-size:9px;color:#7a6248;line-height:1.45;max-width:620px}
+
+/* EMPLOYEE HUB */
+.employee-main{background:#0b0706}
+/* Returning employees land inside the canonical employee zone. Production asset: Assets/lockerroom.webp */
+.employee-hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);min-height:620px;background-color:#11110f;background-image:url("Assets/lockerroom.webp");background-size:cover;background-position:38% 45%;background-repeat:no-repeat}
+/* Darken the UI zones while deliberately leaving the central worker readable. */
+.employee-hero:before{content:"";position:absolute;inset:0;pointer-events:none;background:
+ linear-gradient(90deg,rgba(5,4,3,.97) 0%,rgba(6,5,4,.92) 24%,rgba(6,5,4,.66) 38%,rgba(6,5,4,.12) 53%,rgba(6,5,4,.18) 66%,rgba(6,5,4,.61) 82%,rgba(5,4,3,.84) 100%),
+ linear-gradient(0deg,rgba(5,4,3,.86) 0%,rgba(5,4,3,.34) 34%,rgba(5,4,3,.04) 67%,rgba(5,4,3,.22) 100%)}
+.employee-hero:after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 -90px 100px rgba(5,3,2,.72),inset 0 0 120px rgba(0,0,0,.30)}
+.hero-content{position:relative;z-index:2;width:min(1440px,100%);min-height:calc(100vh - 72px);margin:auto;padding:34px 5.5vw 34px;display:flex;align-items:center}
+.welcome-card{max-width:610px}
+.welcome-handle{font-family:var(--serif);font-size:clamp(44px,5vw,74px);line-height:.9;letter-spacing:-.035em;margin:8px 0 8px}
+.welcome-sub{color:#c8b294;font-size:11px;line-height:1.55;max-width:530px}
+.hero-stats{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr);gap:10px;margin-top:16px;max-width:610px}
+.stat{border:1px solid rgba(213,177,105,.42);background:rgba(10,7,5,.82);backdrop-filter:blur(7px)}
+.stat small{display:block;color:var(--muted);font-size:8px;letter-spacing:.14em}.stat strong{display:block;font-family:var(--serif);font-size:clamp(27px,3vw,44px);font-weight:400;margin-top:5px}.stat .active{color:var(--green)}
+.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* CLEAN RETURNING-EMPLOYEE HOME */
+.employee-hero{min-height:calc(100vh - 72px)}
+.hero-content{min-height:calc(100vh - 72px)}
+.welcome-card{padding-bottom:18px}
+.welcome-sub{max-width:600px}
+.hero-stats{max-width:610px}
+.home-note{
+  margin-top:10px;color:#8f7b66;font-size:8px;letter-spacing:.13em;
+  text-transform:uppercase
+}
+.home-footer{
+  position:absolute;left:0;right:0;bottom:0;z-index:3;
+  display:flex;justify-content:center;
+  padding:10px 18px;
+  background:linear-gradient(180deg,transparent,rgba(5,3,2,.80));
+  color:#8c7761;font-size:8px;letter-spacing:.14em
+}
+
+
+
+
+.cuckpower-card{padding:18px 20px;min-height:128px;display:flex;flex-direction:column;justify-content:center}
+.cuckpower-card strong{font-size:clamp(42px,4.8vw,66px)!important}
+.cuckpower-rise{color:var(--green);font-size:.54em;margin-left:7px;vertical-align:.13em}
+.status-stack{display:grid;grid-template-rows:1fr 1fr;min-height:128px}
+.status-block{padding:14px 17px;display:flex;flex-direction:column;justify-content:center}
+.status-block + .status-block{border-top:1px solid rgba(213,177,105,.34)}
+.status-block strong{font-size:clamp(26px,3vw,40px)!important;margin-top:4px!important}
+.status-block .active{color:var(--green)}
+.status-detail{margin-top:5px;color:#8f7b66;font-size:7px;letter-spacing:.12em}
+.employee-number{color:#9b856d;font-size:8px;letter-spacing:.15em;margin-top:3px}
+.earn-card{
+  margin-top:10px;max-width:610px;
+  border:1px solid rgba(199,141,67,.76);
+  background:linear-gradient(180deg,rgba(103,31,24,.88),rgba(63,20,17,.92));
+  padding:15px 20px;text-align:center;
+  transition:filter .18s ease,transform .18s ease
+}
+.earn-card:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.earn-title{font-family:var(--serif);font-size:25px;line-height:1;color:#f2e2c5}
+.earn-sub{margin-top:6px;color:#bca68b;font-size:8px;letter-spacing:.04em}
+.employee-record-link{
+  display:inline-block;margin-top:9px;padding:0;border:0;background:transparent;
+  color:#a98e72;font-size:8px;letter-spacing:.13em;text-transform:uppercase
+}
+.employee-record-link:hover{color:var(--cream)}
+
+/* modals */
+.modal-wrap{position:fixed;inset:0;z-index:900;display:grid;place-items:center;padding:18px;background:rgba(0,0,0,.84)}
+.modal{width:min(760px,100%);max-height:90vh;overflow:auto;border:1px solid #806146;background:#efe4c7;color:#29130f;box-shadow:0 30px 110px #000}
+.modal-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#8f211b;color:#f5e6c4;border-bottom:2px solid #c89b45;font-size:9px;letter-spacing:.15em;font-weight:800}.close{width:34px;height:34px;border:1px solid rgba(255,255,255,.4);background:rgba(0,0,0,.12);color:#fff;font-size:20px}.modal-body{padding:28px;background:repeating-linear-gradient(to bottom,rgba(98,65,34,.055) 0,rgba(98,65,34,.055) 1px,transparent 1px,transparent 28px),#efe4c7}.modal-big{font-family:var(--serif);font-size:72px;color:#8f211b;line-height:1;text-align:center}.modal-big small{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:#745a3e;margin-top:10px}.checks{margin-top:22px}.check{display:grid;grid-template-columns:22px 1fr auto;gap:10px;padding:10px 0;border-top:1px solid #bea777;font-size:10px}.check b{color:#677d50}.check em{font-style:normal;color:#8f211b;font-size:8px;letter-spacing:.1em}.modal-verdict{margin-top:22px;padding:16px;border-top:1px solid #bda574;border-bottom:1px solid #bda574;text-align:center}.modal-verdict strong{font-family:var(--serif);font-size:25px;color:#8f211b;font-weight:400;font-style:italic}.disclaimer{margin-top:16px;color:#765e45;font-size:9px;line-height:1.55}
+
+.toast{position:fixed;right:20px;bottom:20px;z-index:1500;max-width:410px;padding:14px 16px;border:1px solid var(--amber);background:#150d09;color:#ead8bc;box-shadow:0 16px 50px #000;transform:translateY(20px);opacity:0;pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:none}.toast b{display:block;color:var(--amber);font-size:9px;letter-spacing:.15em;margin-bottom:5px}.toast span{font-family:var(--serif);font-style:italic}
+
+/* concept controls */
+.dev{position:fixed;left:12px;bottom:12px;z-index:1200}.dev>button{border:1px solid #493629;background:#0c0806;color:#796b5f;padding:7px 9px;font-size:8px}.dev-panel{position:absolute;left:0;bottom:35px;width:250px;padding:11px;background:#0d0907;border:1px solid var(--line);box-shadow:0 12px 45px #000}.dev-panel small{display:block;color:var(--amber);letter-spacing:.13em;margin-bottom:8px}.dev-panel button{width:100%;margin-top:6px;border:1px solid var(--line);background:#17100d;color:#d1b99d;padding:8px;font-size:8px;text-align:left}
+
+
+@media(min-width:1051px){
+  .employee-hero{background-position:38% 45%}
+  .hero-content{align-items:flex-start;padding-top:11vh}
+  .welcome-card{margin-top:0}
+}
+
+@media(max-width:1180px){
+ .site-header{grid-template-columns:minmax(190px,auto) 1fr minmax(155px,auto);padding:0 12px}
+ .brand-lockup{width:205px;padding-right:12px}
+ .nav{justify-content:flex-start;overflow-x:auto;scrollbar-width:none}
+ .nav::-webkit-scrollbar{display:none}
+ .nav button{min-width:auto;padding:0 12px;font-size:9px}
+ .header-status{min-width:155px;margin-left:8px;padding-left:12px}
+}
+@media(max-width:1050px){
+ .employee-hero{background-position:43% 45%}
+
+ .onboarding{grid-template-columns:1fr}.claim-roadmap{position:static;order:-1}.roadmap-note{display:none}
+ 
+}
+@media(max-width:700px){
+ .site-header{
+   position:sticky;
+   grid-template-columns:1fr auto;
+   min-height:auto;
+   padding:8px 10px 0
+ }
+ .brand-lockup{width:185px;padding:0 0 8px}
+ .header-status{
+   display:flex;min-width:0;margin:0;padding:0 0 8px 10px;border-left:0
+ }
+ .header-status small{font-size:7px}.header-status strong{font-size:9px}
+ .nav{
+   grid-column:1/-1;
+   order:3;
+   width:calc(100% + 20px);
+   margin-left:-10px;
+   border-top:1px solid rgba(114,80,57,.35);
+   justify-content:flex-start
+ }
+ .nav button{
+   flex:0 0 auto;
+   min-height:42px;
+   padding:0 14px;
+   font-size:8px
+ }
+ .section{padding:14px}.assessment{padding:20px}.assessment-top{display:block}.progress{width:100%;max-width:none;text-align:left;margin-top:15px}.answers{grid-template-columns:1fr}.assessment-foot{display:block}.assessment-foot span{display:block;margin-top:7px}
+ .registration-grid{grid-template-columns:1fr}.registration .wide{grid-column:auto}.registration-actions{display:grid}
+ .employee-hero{min-height:calc(100vh - 104px);background-position:58% center}.hero-content{min-height:calc(100vh - 104px);padding:28px 14px 30px;align-items:flex-start}.hero-stats{grid-template-columns:1fr}.status-stack{min-height:118px}
+ .result-bar{grid-template-columns:1fr auto}.result-bar span:nth-child(2){display:none}.result-bar span:last-child{text-align:right}
+ .record-row{grid-template-columns:115px 1fr}.modal-body{padding:20px}.modal-big{font-size:56px}
+}
+
+@media(max-width:700px){
+  body.assessment-mode .site-header{
+    min-height:72px;
+    padding:8px 10px;
+    grid-template-columns:1fr auto;
+  }
+  body.assessment-mode .brand-lockup{
+    width:165px;
+    padding:0;
+  }
+  body.assessment-mode .header-status{
+    padding:0;
+    margin:0;
+    border-left:0;
+    min-width:130px;
+  }
+  body.assessment-mode .onboarding-shell{
+    padding:14px 10px calc(30px + env(safe-area-inset-bottom));
+    min-height:auto;
+  }
+  body.assessment-mode .onboarding{
+    display:block;
+  }
+  body.assessment-mode .claim-roadmap{
+    display:none;
+  }
+  body.assessment-mode .assessment{
+    min-height:auto;
+    padding:18px 14px 22px;
+  }
+  body.assessment-mode .assessment-title{
+    font-size:30px;
+  }
+  body.assessment-mode .question-copy{
+    margin:24px 0 16px;
+    font-size:25px;
+  }
+  body.assessment-mode .answer{
+    min-height:78px;
+    padding:13px 14px;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:rgba(202,148,64,.18);
+  }
+  body.assessment-mode .answer-text{
+    font-size:18px;
+  }
+  body.assessment-mode .assessment-foot{
+    margin-top:18px;
+    padding-top:12px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<div class="intro" id="intro">
+  <div class="intro-inner">
+    <img class="intro-mark" alt="Ansem's Cuck Factory" src="Assets/cuck-factory-logo.png" decoding="async" fetchpriority="high">
+    <div class="intro-kicker">FACTORY ENTRY PROTOCOL</div>
+    <div class="intro-status" id="introStatus">Locating employee record…</div>
+    <div class="intro-bar"><span></span></div>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <header class="site-header">
+    <img class="brand-lockup" alt="Ansem's Cuck Factory" src="Assets/cuck-factory-logo.png" decoding="async">
+    <nav class="nav" id="employeeNav">
+      <button data-page="employee-record.html">EMPLOYEE RECORD</button>
+      <button data-action="invite">INVITE A CUCK</button>
+      <button data-page="shifts/">SHIFTS</button>
+      <button data-action="cuckdrop">CUCKDROP</button>
+      <button data-action="watch">WATCH</button>
+      <button data-action="buy">BUY $CUCKS</button>
+    </nav>
+    <div class="header-status" id="headerStatus"><small>FACTORY ACCESS</small><strong>ASSESSMENT REQUIRED</strong></div>
+  </header>
+
+  <main id="newCuckView" class="onboarding-shell hidden">
+    <div class="onboarding">
+      <section class="assessment frame">
+        <div id="assessmentQuestionView">
+          <div class="assessment-top">
+            <div>
+              <div class="question-number" id="qNumber">STEP 1 OF 6 · REQUIRED</div>
+              <div class="assessment-title">MANDATORY CUCK ASSESSMENT</div>
+            </div>
+            <div class="progress"><small id="qProgressText">ASSESSMENT 1 / 6</small><div class="progress-track"><div class="progress-fill" id="qProgressFill"></div></div></div>
+          </div>
+          <div class="question-copy" id="questionCopy"></div>
+          <div class="answers" id="answers"></div>
+          <div class="assessment-foot"><span>FORM CF-01 · ANSWER HONESTLY OR CONVINCINGLY</span><span>YOUR DIGNITY WILL BE QUANTIFIED</span></div>
+        </div>
+
+        <div id="assessmentResultView" class="hidden">
+          <div class="assessment-top">
+            <div><div class="question-number">ASSESSMENT COMPLETE · RECORD PENDING</div><div class="assessment-title">YOUR FACTORY CLASSIFICATION</div></div>
+            <div class="progress"><small>STEP 1 COMPLETE</small><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div></div>
+          </div>
+          <article class="assessment-result">
+            <div class="result-bar"><span>ANSEM'S CUCK FACTORY</span><span id="resultFile">FILE CF-000000</span><span>CUCKS.MONEY</span></div>
+            <div class="result-body">
+              <div class="result-kicker">YOU HAVE BEEN ASSESSED AS A</div>
+              <div class="classification" id="classification">ENORMOUS CUCK</div>
+              <div class="power-label">CUCKPOWER</div><div class="power" id="assessmentPower">10,020</div>
+              <div class="result-tagline">YOUR DIGNITY CANNOT BE RECOVERED, BUT IT HAS BEEN QUANTIFIED</div>
+            </div>
+          </article>
+          <div class="registration">
+            <div class="eyebrow">STEPS 2–4 · CREATE EMPLOYEE RECORD</div>
+            <div class="registration-grid">
+              <div class="field"><label>X HANDLE</label><input id="regHandle" placeholder="@yourhandle" autocomplete="off"></div>
+              <div class="field"><label>RECEIVING WALLET ADDRESS</label><input id="regWallet" placeholder="0x… or chain address" autocomplete="off"></div>
+              <div class="field wide"><label>PUBLIC X POST URL</label><input id="regPost" placeholder="https://x.com/you/status/…" autocomplete="off"></div>
+            </div>
+            <div class="registration-actions">
+              <div class="registration-help">Concept behaviour: after this record is created, the assessment is never shown again on normal return. The employee record and all future shifts are persisted locally in this prototype.</div>
+              <button class="paper-btn" id="activateEmployeeBtn">ACTIVATE EMPLOYEE RECORD</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="claim-roadmap frame">
+        <div class="eyebrow">CUCKDROP CLAIM · REQUIRED ROUTE</div><div class="roadmap-title">Management needs four tiny things.</div>
+        <div class="step active" id="roadStep1"><div class="step-n">01</div><div><strong>COMPLETE ASSESSMENT</strong><span>Six questions. Irreversible emotional consequences.</span></div></div>
+        <div class="step" id="roadStep2"><div class="step-n">02</div><div><strong>PUBLIC CONTRIBUTION</strong><span>Post the assessment result on X.</span></div></div>
+        <div class="step" id="roadStep3"><div class="step-n">03</div><div><strong>REGISTER ADDRESS</strong><span>Attach a receiving address to the employee file.</span></div></div>
+        <div class="step" id="roadStep4"><div class="step-n">04</div><div><strong>REPORT TO WORK</strong><span>Employee hub unlocked. Cuckdrop remains imminent.</span></div></div>
+        <div class="roadmap-note">“Hope is now a recurring shift. Leaving would make the previous work feel wasted.”</div>
+      </aside>
+    </div>
+  </main>
+
+  <main id="employeeView" class="employee-main hidden">
+    <section class="employee-hero">
+      <div class="hero-content">
+        <div class="welcome-card">
+          <div class="eyebrow">EMPLOYEE PORTAL · SECURE ACCESS</div>
+          <div class="welcome-handle">WELCOME BACK,<br><span id="welcomeHandle">@CUCK</span></div>
+          <div class="employee-number" id="heroEmployeeNumber">EMPLOYEE #00000</div>
+
+          <div class="hero-stats">
+            <div class="stat cuckpower-card">
+              <small>CUCKPOWER</small>
+              <strong><span id="heroPower">10,020</span><span class="cuckpower-rise">↑</span></strong>
+            </div>
+
+            <div class="stat status-stack">
+              <div class="status-block cuckdrop-open">
+                <small>CUCKDROP STATUS</small>
+                <strong class="active">ACTIVE</strong>
+                <div class="status-detail">CLICK FOR DETAILS</div>
+              </div>
+              <div class="status-block">
+                <small>SHIFTS COMPLETED</small>
+                <strong id="heroShifts">0</strong>
+              </div>
+            </div>
+          </div>
+
+          <button class="earn-card" data-page="shifts/">
+            <div class="earn-title">EARN MORE</div>
+            <div class="earn-sub">Increase your Cuckpower. Get closer.</div>
+          </button>
+
+          <div>
+            <button class="employee-record-link" data-page="employee-record.html">VIEW EMPLOYEE RECORD</button>
+          </div>
+
+          <div class="home-note">Your file remains active until Management decides otherwise.</div>
+        </div>
+      </div>
+      <div class="home-footer">ANSEM'S CUCK FACTORY · EMPLOYEE ACCESS TERMINAL</div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-wrap hidden" id="cuckdropModal"><div class="modal"><div class="modal-head"><span>ANSEM'S CUCK FACTORY · AIRDROP ELIGIBILITY FILE</span><button class="close" data-close="cuckdropModal">×</button></div><div class="modal-body"><div class="result-kicker" style="text-align:center">CURRENT ELIGIBILITY</div><div class="modal-big" id="modalReadiness">98.70%<small>CUCKDROP STATUS: ACTIVE</small></div><div class="checks" id="eligibilityChecks"></div><div class="modal-verdict"><div class="result-kicker">MANAGEMENT VERDICT</div><strong>Exceptional progress. One additional requirement is expected shortly.</strong></div><div class="disclaimer">Projected eligibility and allocation are satirical in-world Management estimates only. No result, action, post, score or shift guarantees tokens, money or future value.</div></div></div></div>
+
+<div class="toast" id="toast"><b>FACTORY SYSTEM</b><span id="toastText"></span></div>
+
+<div class="dev"><button id="devToggle">CONCEPT CONTROLS</button><div class="dev-panel hidden" id="devPanel"><small>LOCAL PROTOTYPE ONLY</small><button id="devReset">RESET → NEW CUCK</button><button id="devClearIntro">REPLAY INTRO / ROUTING</button></div></div>
+
+<script>
+(() => {
+  const STORE = 'cuck-factory-concept-employee-v1';
+  const ONBOARD = 'cuck-factory-concept-onboarding-v1';
+  const INTRO_MS = 2600;
+
+  /*
+    CLOUDFLARE PERSISTENCE CONTRACT
+    --------------------------------
+    This concept remains usable from file:// with localStorage, but when hosted it also tries to use same-origin Cloudflare Worker endpoints.
+
+    Recommended Worker + D1 endpoints:
+      GET  /api/session              -> { status:'ok', employee:null|{...} }
+      POST /api/employee/activate    -> validate unique handle/wallet/postUrl, insert employee + set signed HttpOnly session cookie
+      POST /api/employee/sync        -> upsert the current employee snapshot
+      POST /api/events               -> append-only event log (dedupe by event.id)
+
+    Production rule: D1/Worker is the source of truth. localStorage is only a fast browser cache and offline fallback.
+    The Worker should set Secure; HttpOnly; SameSite=Lax session cookies and perform uniqueness checks server-side.
+  */
+  const CF = {
+    enabled: location.protocol === 'http:' || location.protocol === 'https:',
+    base: (window.CUCK_FACTORY_CONFIG?.apiBase || '/api').replace(/\/$/,'') + '/',
+    timeoutMs: 2200
+  };
+  let syncTimer = 0;
+  const $ = id => document.getElementById(id);
+  const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const nowISO = () => new Date().toISOString();
+  const fmt = n => Number(n || 0).toLocaleString('en-US');
+  const shortWallet = v => !v ? '—' : (v.length > 15 ? v.slice(0,7)+'…'+v.slice(-5) : v);
+  const makeId = () => 'CF-' + String(Math.floor(10000 + Math.random()*89999));
+  let draft = { answers: [], score: 0, classification: '', power: 0, file: '' };
+
+  const QUESTIONS = [
+    { q:'Ansem says the airdrop is “soon.” What does a productive employee do?', a:[['Ask for a date',0],['Close the laptop',1],['Post harder',3],['Assume “soon” is a legally binding unit of time',4]] },
+    { q:'Your carrot moved 0.4 cm further away after a perfect shift. Your interpretation?', a:[['Technical issue',1],['Management knows best',3],['Bullish',4],['This is clearly performance-based compensation',4]] },
+    { q:'A friend asks why you still work here for free. You answer:', a:[['Fair point',0],['It builds character',2],['You would not understand the allocation model',4],['I am basically early retirement adjacent',4]] },
+    { q:'Management adds one final requirement after you complete the final requirement.', a:[['Object',0],['Request clarification',1],['Thank Management for the opportunity',4],['Complete it before reading what it is',4]] },
+    { q:'What is the most valuable Factory asset?', a:[['Machinery',1],['Liquidity',2],['Human capital',2],['Employee belief that the next shift changes everything',4]] },
+    { q:'Choose the statement most likely to appear in your permanent file.', a:[['Maintains boundaries',0],['Shows healthy skepticism',1],['Highly coachable',3],['Devotion-compatible',4]] }
+  ];
+
+  function loadEmployee(){ try{return JSON.parse(localStorage.getItem(STORE)||'null')}catch{return null} }
+  function loadOnboarding(){ try{return JSON.parse(localStorage.getItem(ONBOARD)||'null')}catch{return null} }
+  function saveOnboarding(){ localStorage.setItem(ONBOARD, JSON.stringify({draft,handle:$('regHandle')?.value||'',wallet:$('regWallet')?.value||'',postUrl:$('regPost')?.value||''})); }
+
+  async function cfRequest(path,options={}){
+    if(!CF.enabled)return null;
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),CF.timeoutMs);
+    try{
+      const response=await fetch(CF.base.replace(/\/$/,'')+'/'+String(path).replace(/^\//,''),{
+        credentials:'include',
+        headers:{'accept':'application/json',...(options.body?{'content-type':'application/json'}:{}),...(options.headers||{})},
+        ...options,
+        signal:controller.signal
+      });
+      let data=null;
+      try{data=await response.json()}catch{}
+      return {ok:response.ok,status:response.status,data};
+    }catch(error){
+      console.info('[Cuck Factory] Cloudflare API unavailable; using local cache.',error?.name||error);
+      return null;
+    }finally{clearTimeout(timer)}
+  }
+  function queueEmployeeSync(e,reason='employee_update'){
+    if(!CF.enabled)return;
+    clearTimeout(syncTimer);
+    syncTimer=setTimeout(()=>{
+      cfRequest('/employee/sync',{method:'POST',body:JSON.stringify({reason,employee:e})});
+    },550);
+  }
+  function saveEmployee(e,reason='employee_update'){
+    localStorage.setItem(STORE, JSON.stringify(e));
+    queueEmployeeSync(e,reason);
+  }
+  async function restoreCloudflareSession(){
+    const result=await cfRequest('/session',{method:'GET'});
+    const employee=result?.ok ? (result.data?.employee||null) : null;
+    if(employee){
+      localStorage.setItem(STORE,JSON.stringify(employee));
+      return employee;
+    }
+    return null;
+  }
+  async function activateCloudflareEmployee(e){
+    const result=await cfRequest('/employee/activate',{method:'POST',body:JSON.stringify({employee:e})});
+    if(!result)return null;
+    if(result.ok)return result.data?.employee||e;
+    if(result.status===409){
+      throw new Error(result.data?.message||'This X handle, wallet or X post is already attached to another employee record.');
+    }
+    return null;
+  }
+  function postServerEvent(event,employeeId=''){
+    if(!CF.enabled)return;
+    cfRequest('/events',{method:'POST',body:JSON.stringify({employeeId,event})});
+  }
+  function logEvent(e,type,label,detail=''){
+    e.events ||= [];
+    const event={id:window.crypto?.randomUUID?.() || String(Date.now()+Math.random()), type, label, detail, at:nowISO()};
+    e.events.unshift(event);
+    e.events = e.events.slice(0,40);
+    postServerEvent(event,e.employeeId||'');
+    return event;
+  }
+  function trackFactoryEvent(type,detail={}){
+    postServerEvent({id:window.crypto?.randomUUID?.() || String(Date.now()+Math.random()),type,label:type.toUpperCase().replaceAll('_',' '),detail,at:nowISO()},loadEmployee()?.employeeId||'');
+  }
+  function normalizeHandle(v){ const x=String(v||'').trim().replace(/^@+/, '').replace(/[^a-zA-Z0-9_]/g,'').slice(0,30); return x?'@'+x:'@worker'; }
+  function readiness(e){
+    const base = 98.30;
+    const powerPart = Math.max(0, Math.min(.45, ((e.assessment?.power||8000)-8000)/5000));
+    const shiftPart = Math.min(.72,(e.shifts?.length||0)*.08);
+    const recruitPart = Math.min(.24,(e.recruits||0)*.04);
+    const loyaltyPart = Math.min(.12,Math.max(0,(e.loyalty||1)-1)*.015);
+    return Math.min(99.96, base+powerPart+shiftPart+recruitPart+loyaltyPart);
+  }
+  function allocation(e){ return Math.round((((e.assessment?.power||0)*100)+((e.shifts?.length||0)*65000)+((e.recruits||0)*40000))/1000)*1000; }
+  function best(e,type){ return Math.max(0,...(e.shifts||[]).filter(s=>s.type===type).map(s=>s.score||0)); }
+  function count(e,type){ return (e.shifts||[]).filter(s=>s.type===type).length; }
+  function showToast(text){ $('toastText').textContent=text; $('toast').classList.add('show'); clearTimeout(showToast.t); showToast.t=setTimeout(()=>$('toast').classList.remove('show'),2800); }
+
+  async function routeAfterIntro(){
+    let e=loadEmployee(), o=loadOnboarding();
+    $('introStatus').textContent=e?'Employee record found. Returning to work…':o?.draft?.answers?.length?'Incomplete claim found. Resuming employee file…':'Checking Factory employee records…';
+
+    // Cloudflare/D1 can restore a returning employee even when the browser cache is empty,
+    // provided the Worker has previously issued its signed HttpOnly session cookie.
+    if(!e && CF.enabled){
+      const remote=await restoreCloudflareSession();
+      if(remote)e=remote;
+    }
+    if(!e && !o?.draft?.answers?.length)$('introStatus').textContent='No employee record found. Assessment required…';
+
+    setTimeout(()=>{
+      $('intro').classList.add('hidden'); $('app').classList.remove('hidden');
+      if(e){ trackFactoryEvent('employee_return',{employeeId:e.employeeId}); renderEmployee(e); }
+      else startAssessment(true);
+    }, 420);
+  }
+  setTimeout(routeAfterIntro, INTRO_MS-700);
+
+  function startAssessment(resume=false){
+    document.body.classList.add('assessment-mode');
+    $('newCuckView').classList.remove('hidden'); $('employeeView').classList.add('hidden');
+    $('employeeNav').style.display='none';
+    $('headerStatus').innerHTML='<small>FACTORY ACCESS</small><strong style="color:#c99a4a">ASSESSMENT REQUIRED</strong>';
+    const saved=resume?loadOnboarding():null;
+    if(saved?.draft){
+      draft=saved.draft;
+      $('regHandle').value=saved.handle||''; $('regWallet').value=saved.wallet||''; $('regPost').value=saved.postUrl||'';
+    }else{
+      draft={answers:[],score:0,classification:'',power:0,file:'CF-'+String(Math.floor(100000+Math.random()*899999))};
+      saveOnboarding();
+    }
+    if(draft.answers.length>=QUESTIONS.length && draft.classification){
+      $('assessmentQuestionView').classList.add('hidden'); $('assessmentResultView').classList.remove('hidden');
+      $('classification').textContent=draft.classification; $('assessmentPower').textContent=fmt(draft.power); $('resultFile').textContent='FILE '+draft.file;
+      $('roadStep1').classList.add('done'); $('roadStep1').classList.remove('active'); $('roadStep2').classList.add('active');
+    }else{
+      $('assessmentQuestionView').classList.remove('hidden'); $('assessmentResultView').classList.add('hidden'); renderQuestion();
+    }
+  }
+  function renderQuestion(){
+    const i=draft.answers.length, item=QUESTIONS[i];
+    $('qNumber').textContent=`STEP ${i+1} OF ${QUESTIONS.length} · REQUIRED`;
+    $('qProgressText').textContent=`ASSESSMENT ${i+1} / ${QUESTIONS.length}`;
+    $('qProgressFill').style.width=((i+1)/QUESTIONS.length*100)+'%';
+    $('questionCopy').textContent=item.q;
+    $('answers').innerHTML=item.a.map((x,n)=>`<button class="answer" data-answer="${n}"><span class="answer-key">${String.fromCharCode(65+n)}</span><span class="answer-text">${esc(x[0])}</span></button>`).join('');
+  }
+  function selectAnswer(index){
+    const i=draft.answers.length, choice=QUESTIONS[i].a[index];
+    draft.answers.push(index); draft.score += choice[1]; saveOnboarding();
+    if(draft.answers.length<QUESTIONS.length){ renderQuestion(); return; }
+    finishAssessment();
+  }
+  function finishAssessment(){
+    const s=draft.score;
+    draft.classification = s>=22?'INDUSTRIAL-GRADE CUCK':s>=18?'ENORMOUS CUCK':s>=13?'CERTIFIED CUCK':'PROMISING CUCK';
+    draft.power = 5400 + s*210;
+    $('classification').textContent=draft.classification; $('assessmentPower').textContent=fmt(draft.power); $('resultFile').textContent='FILE '+draft.file;
+    $('assessmentQuestionView').classList.add('hidden'); $('assessmentResultView').classList.remove('hidden'); saveOnboarding();
+    ['roadStep1','roadStep2','roadStep3'].forEach((id,idx)=>{ $(id).classList.toggle('done',idx===0); $(id).classList.toggle('active',idx===1); });
+  }
+
+
+  // Assessment answers are rendered dynamically, so use delegated click handling.
+  // This also avoids iOS Safari/touch issues with listeners added before the buttons exist.
+  $('answers').addEventListener('click', (event) => {
+    const button = event.target.closest('[data-answer]');
+    if (!button || button.disabled) return;
+    const index = Number(button.dataset.answer);
+    if (!Number.isInteger(index)) return;
+
+    // Prevent accidental double taps from submitting two answers.
+    [...$('answers').querySelectorAll('[data-answer]')].forEach(b => b.disabled = true);
+    selectAnswer(index);
+  });
+
+  ['regHandle','regWallet','regPost'].forEach(id=>$(id).addEventListener('input',saveOnboarding));
+
+  $('activateEmployeeBtn').onclick=async()=>{
+    const button=$('activateEmployeeBtn');
+    const handle=normalizeHandle($('regHandle').value), wallet=$('regWallet').value.trim(), postUrl=$('regPost').value.trim();
+    if(wallet.length<6 || !/^https?:\/\//i.test(postUrl)){
+      showToast('Management requires a receiving address and a public X post URL before the record can be activated.'); return;
+    }
+    let e={
+      version:2, employeeId:makeId(), handle, wallet, postUrl, createdAt:nowISO(), lastSeen:nowISO(),
+      assessment:{...draft}, shifts:[], recruits:0, loyalty:1, status:'ACTIVE', events:[]
+    };
+    logEvent(e,'employee','EMPLOYEE RECORD ACTIVATED','Assessment, X contribution and receiving address attached.');
+    logEvent(e,'assessment','ASSESSMENT RECORDED',`${draft.classification} · ${fmt(draft.power)} Cuckpower`);
+    logEvent(e,'post','PUBLIC CONTRIBUTION VERIFIED',postUrl);
+
+    button.disabled=true; button.textContent='REGISTERING EMPLOYEE…';
+    try{
+      const remote=await activateCloudflareEmployee(e);
+      if(remote)e=remote;
+    }catch(error){
+      button.disabled=false; button.textContent='ACTIVATE EMPLOYEE RECORD';
+      showToast(error.message||'This employee record could not be activated.');
+      return;
+    }
+    saveEmployee(e,'employee_activated');
+    localStorage.removeItem(ONBOARD);
+    button.disabled=false; button.textContent='ACTIVATE EMPLOYEE RECORD';
+    showToast('Employee record activated. You made it inside. Please report to work.');
+    renderEmployee(e); window.scrollTo({top:0,behavior:'smooth'});
+  };
+
+  function renderEmployee(e){
+    document.body.classList.remove('assessment-mode');
+    e.lastSeen=nowISO(); saveEmployee(e,'employee_seen');
+    $('newCuckView').classList.add('hidden'); $('employeeView').classList.remove('hidden'); $('employeeNav').style.display='flex';
+    $('headerStatus').innerHTML=`<small>${esc(e.employeeId)} · RECORD ACTIVE</small><strong>● EMPLOYED</strong>`;
+    const r=readiness(e), a=allocation(e), shiftN=(e.shifts||[]).length;
+    $('welcomeHandle').textContent=e.handle; $('heroPower').textContent=fmt(e.assessment.power); $('heroShifts').textContent=shiftN; $('heroEmployeeNumber').textContent='EMPLOYEE '+e.employeeId.replace('CF-','#');
+    renderModals(e);
+  }
+  function renderModals(e){
+    const r=readiness(e);
+    $('modalReadiness').innerHTML=r.toFixed(2)+'%<small>CUCKDROP STATUS: ACTIVE</small>';
+    const checks=[
+      ['✓','ASSESSMENT COMPLETED','VERIFIED'],['✓','PUBLIC CONTRIBUTION','VERIFIED'],['✓','RECEIVING ADDRESS','REGISTERED'],
+      [(e.shifts||[]).length?'✓':'○','FACTORY LABOUR', (e.shifts||[]).length?`${e.shifts.length} SHIFT${e.shifts.length===1?'':'S'}`:'RECOMMENDED'],
+      [(e.recruits||0)?'✓':'○','RECRUITMENT ACTIVITY',(e.recruits||0)?`${e.recruits} CUCK${e.recruits===1?'':'S'}`:'OPTIONAL'],['⟳','FINAL MANAGEMENT APPROVAL','PENDING']
+    ];
+    $('eligibilityChecks').innerHTML=checks.map(x=>`<div class="check"><b>${x[0]}</b><span>${x[1]}</span><em>${x[2]}</em></div>`).join('');
+  }
+
+  // Homepage navigation. Dedicated pages can be wired here without bloating the returning-user home.
+  [...document.querySelectorAll('[data-page]')].forEach(el=>el.addEventListener('click',()=>{
+    trackFactoryEvent('page_open',{page:el.dataset.page});
+    location.href=el.dataset.page;
+  }));
+
+  [...document.querySelectorAll('[data-action]')].forEach(el=>el.addEventListener('click',()=>{
+    const action=el.dataset.action;
+    if(action==='cuckdrop'){
+      trackFactoryEvent('cuckdrop_opened');
+      openModal('cuckdropModal');
+    }else if(action==='invite'){
+      trackFactoryEvent('invite_opened');
+      showToast('Dedicated INVITE A CUCK page will open here.');
+    }else if(action==='shifts'){
+      trackFactoryEvent('shifts_opened');
+      location.href='shifts/';
+    }else if(action==='watch'){
+      trackFactoryEvent('watch_opened');
+      showToast('Dedicated WATCH page will open here.');
+    }else if(action==='buy'){
+      trackFactoryEvent('buy_opened');
+      showToast('BUY $CUCKS destination placeholder.');
+    }
+  }));
+
+  [...document.querySelectorAll('.cuckdrop-open')].forEach(x=>x.addEventListener('click',()=>{
+    trackFactoryEvent('cuckdrop_opened');
+    openModal('cuckdropModal');
+  }));
+
+  function openModal(id){
+    const modal=$(id); if(!modal)return;
+    modal.classList.remove('hidden'); document.body.style.overflow='hidden';
+  }
+  function closeModal(id){
+    const modal=$(id); if(!modal)return;
+    modal.classList.add('hidden'); document.body.style.overflow='';
+  }
+  [...document.querySelectorAll('[data-close]')].forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.close)));
+  [...document.querySelectorAll('.modal-wrap')].forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
+
+  // Concept controls
+  $('devToggle').onclick=()=>$('devPanel').classList.toggle('hidden');
+  $('devReset').onclick=()=>{localStorage.removeItem(STORE);localStorage.removeItem(ONBOARD);location.reload()};
+  $('devClearIntro').onclick=()=>location.reload();
+
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'){['cuckdropModal'].forEach(id=>{if(!$(id).classList.contains('hidden'))closeModal(id)})} });
+})();
+</script>
+</body>
+</html>
