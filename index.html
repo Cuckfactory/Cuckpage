@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ansem's Cuck Factory — Employee Portal Concept v4</title>
+<title>Ansem's Cuck Factory — Employee Portal Concept v5</title>
 <link rel="preload" href="Assets/lockerroom.webp" as="image" type="image/webp">
 <link rel="preload" href="Assets/cuck-factory-logo.png" as="image" type="image/png">
 <style>
@@ -181,44 +181,44 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
  linear-gradient(90deg,rgba(5,4,3,.97) 0%,rgba(6,5,4,.92) 24%,rgba(6,5,4,.66) 38%,rgba(6,5,4,.12) 53%,rgba(6,5,4,.18) 66%,rgba(6,5,4,.61) 82%,rgba(5,4,3,.84) 100%),
  linear-gradient(0deg,rgba(5,4,3,.86) 0%,rgba(5,4,3,.34) 34%,rgba(5,4,3,.04) 67%,rgba(5,4,3,.22) 100%)}
 .employee-hero:after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 -90px 100px rgba(5,3,2,.72),inset 0 0 120px rgba(0,0,0,.30)}
-.hero-content{position:relative;z-index:2;width:min(1440px,100%);min-height:620px;margin:auto;padding:48px 28px 32px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(330px,.72fr);gap:38px;align-items:end}
-.welcome-card{max-width:760px}
+.hero-content{position:relative;z-index:2;width:min(1440px,100%);min-height:620px;margin:auto;padding:64px 5.8vw 54px;display:flex;align-items:flex-end}
+.welcome-card{max-width:730px}
 .welcome-handle{font-family:var(--serif);font-size:clamp(58px,7vw,103px);line-height:.88;letter-spacing:-.045em;margin:12px 0 18px}
 .welcome-sub{color:#c8b294;font-size:13px;line-height:1.6;max-width:660px}
 .hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:23px;max-width:700px}
 .stat{padding:15px 16px;border:1px solid rgba(213,177,105,.35);background:rgba(10,7,5,.76);backdrop-filter:blur(6px)}
 .stat small{display:block;color:var(--muted);font-size:8px;letter-spacing:.14em}.stat strong{display:block;font-family:var(--serif);font-size:clamp(27px,3vw,44px);font-weight:400;margin-top:5px}.stat .active{color:var(--green)}
 .hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
-.record-preview{justify-self:end;width:min(430px,100%);background:#d9c8a2;color:#2d1710;border:1px solid #a78459;box-shadow:0 18px 60px rgba(0,0,0,.45);transform:rotate(-.35deg)}
-.record-clip{height:20px;width:92px;border:3px solid #5a4a36;border-bottom:0;border-radius:22px 22px 0 0;margin:-18px auto 0;background:#8b765b}
-.record-head{padding:15px 18px;border-bottom:2px solid #9b2a21;display:flex;justify-content:space-between;gap:10px;font-size:9px;font-weight:800;letter-spacing:.12em}
-.record-body{padding:18px;background:repeating-linear-gradient(to bottom,rgba(74,45,24,.08) 0,rgba(74,45,24,.08) 1px,transparent 1px,transparent 27px)}
-.record-body h3{font-family:var(--serif);font-size:33px;margin:0 0 13px}.record-row{display:grid;grid-template-columns:145px 1fr;gap:9px;padding:7px 0;border-bottom:1px solid rgba(78,48,29,.18);font-size:9px}.record-row span{color:#745a3f}.record-row strong{text-align:right}.record-stamp{margin-top:16px;border:2px solid #8f211b;color:#8f211b;padding:8px 10px;text-align:center;font-weight:900;letter-spacing:.16em;transform:rotate(-1.2deg)}
 
-.hub-grid{width:min(1440px,100%);margin:auto;padding:16px 24px 60px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.5fr);gap:14px}
-.hub-left,.hub-right{display:grid;gap:14px;align-content:start}
-.panel{border:1px solid var(--line);background:linear-gradient(#16100d,#0e0907);padding:17px}
-.panel-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:14px}.panel-title{font-family:var(--serif);font-size:27px}.panel-kicker{font-size:8px;letter-spacing:.17em;color:var(--amber)}.panel-meta{font-size:8px;color:var(--muted);letter-spacing:.1em}
-.department-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.department{position:relative;min-height:280px;padding:17px;border:1px solid var(--line2);background:
- radial-gradient(circle at 75% 12%,rgba(201,145,59,.18),transparent 25%),
- linear-gradient(150deg,#21150f,#0d0806 65%);display:flex;flex-direction:column;overflow:hidden}
-.department:before{content:"";position:absolute;inset:0;opacity:.14;background:repeating-linear-gradient(135deg,transparent 0 12px,rgba(255,255,255,.025) 12px 14px)}
-.department>*{position:relative;z-index:1}
-.dept-no{color:var(--amber);font-size:8px;letter-spacing:.18em}.dept-title{font-family:var(--serif);font-size:29px;line-height:1.02;margin:14px 0 7px}.dept-copy{color:#bca58c;font-size:10px;line-height:1.5}.dept-stats{margin-top:auto;padding-top:18px;display:grid;gap:5px;font-size:9px}.dept-stats div{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:6px}.dept-stats span{color:var(--muted)}.department button{margin-top:13px;width:100%}.department.locked{opacity:.62}.department.locked:after{content:"NEXT ASSIGNMENT PENDING";position:absolute;right:-50px;top:28px;width:220px;text-align:center;transform:rotate(35deg);background:#4e1713;color:#e9d6b5;font-size:8px;letter-spacing:.1em;padding:6px}
 
-.cam-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.crt{position:relative;min-height:260px;border:1px solid #39312b;background:#050606;padding:12px;overflow:hidden;box-shadow:inset 0 0 45px #000}
-.crt:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.035) 0,rgba(255,255,255,.035) 1px,transparent 1px,transparent 4px);opacity:.55}
-.crt-top{display:flex;justify-content:space-between;color:#8a887d;font-size:8px;letter-spacing:.15em}.live{color:#c84f42}.crt-face{height:150px;margin-top:13px;border:1px solid #24221e;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#2b3029,#090b09 58%,#020302);color:#89977f;font-family:var(--serif);font-size:38px;text-align:center;line-height:.85}.crt-face small{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.12em;margin-top:13px;color:#6c7569}
-.terminal{min-height:260px;border:1px solid #3b3228;background:#020503;padding:18px;color:#8ba270;box-shadow:inset 0 0 40px rgba(73,106,52,.08)}
-.terminal small{display:block;color:#747c67;font-size:8px;letter-spacing:.18em;margin-bottom:20px}.terminal-message{font-family:var(--mono);font-size:clamp(16px,2vw,23px);line-height:1.45;text-shadow:0 0 8px rgba(101,145,77,.18)}
 
-.cuckdrop-card{border-color:#5d4230;background:radial-gradient(circle at 80% 25%,rgba(202,148,64,.15),transparent 30%),linear-gradient(#1a120e,#0e0907);cursor:pointer}.readiness{font-family:var(--serif);font-size:63px;color:var(--red2);line-height:1}.readiness small{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.12em}.bar{height:10px;margin:15px 0;border:1px solid var(--line2);background:#080504}.bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--red2),var(--gold));width:98.7%}.carrot{font-size:44px;filter:saturate(.7);transform:rotate(-5deg);display:inline-block}.cuckdrop-copy{font-size:9px;line-height:1.55;color:var(--muted);margin-top:8px}
 
-.activity{display:grid;gap:0}.event{display:grid;grid-template-columns:18px 1fr auto;gap:10px;align-items:start;padding:10px 0;border-top:1px solid var(--line)}.event-dot{width:8px;height:8px;border-radius:50%;background:var(--amber);margin:4px auto 0;box-shadow:0 0 8px rgba(203,149,62,.25)}.event strong{font-size:9px;letter-spacing:.05em}.event span{display:block;color:var(--muted);font-size:8px;margin-top:3px}.event time{color:#7c6757;font-size:8px;white-space:nowrap}
 
-.invite-code{display:flex;gap:8px;margin-top:12px}.invite-code input{flex:1;min-width:0;background:#080504;color:#d7c4a6;border:1px solid var(--line);padding:12px}.invite-code button{flex:0 0 auto}
+
+
+
+
+
+
+
+
+/* CLEAN RETURNING-EMPLOYEE HOME */
+.employee-hero{min-height:calc(100vh - 72px)}
+.hero-content{min-height:calc(100vh - 72px)}
+.welcome-card{padding-bottom:18px}
+.welcome-sub{max-width:600px}
+.hero-stats{max-width:610px}
+.home-note{
+  margin-top:16px;color:#8f7b66;font-size:8px;letter-spacing:.13em;
+  text-transform:uppercase
+}
+.home-footer{
+  position:absolute;left:0;right:0;bottom:0;z-index:3;
+  display:flex;justify-content:center;
+  padding:10px 18px;
+  background:linear-gradient(180deg,transparent,rgba(5,3,2,.80));
+  color:#8c7761;font-size:8px;letter-spacing:.14em
+}
 
 /* modals */
 .modal-wrap{position:fixed;inset:0;z-index:900;display:grid;place-items:center;padding:18px;background:rgba(0,0,0,.84)}
@@ -240,8 +240,7 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
 }
 @media(max-width:1050px){
  .onboarding{grid-template-columns:1fr}.claim-roadmap{position:static;order:-1}.roadmap-note{display:none}
- .hero-content{grid-template-columns:1fr}.record-preview{justify-self:start}
- .hub-grid{grid-template-columns:1fr}.department-grid{grid-template-columns:1fr 1fr}.hub-right{grid-template-columns:1fr 1fr}.hub-right .activity-panel{grid-column:1/-1}
+ 
 }
 @media(max-width:700px){
  .site-header{
@@ -271,8 +270,7 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
  }
  .section{padding:14px}.assessment{padding:20px}.assessment-top{display:block}.progress{width:100%;max-width:none;text-align:left;margin-top:15px}.answers{grid-template-columns:1fr}.assessment-foot{display:block}.assessment-foot span{display:block;margin-top:7px}
  .registration-grid{grid-template-columns:1fr}.registration .wide{grid-column:auto}.registration-actions{display:grid}
- .employee-hero{min-height:610px;background-position:58% center}.hero-content{min-height:610px;padding:38px 14px 22px}.hero-stats{grid-template-columns:1fr 1fr}.record-preview{width:100%}
- .hub-grid{padding:10px}.department-grid,.hub-right,.cam-grid{grid-template-columns:1fr}.hub-right .activity-panel{grid-column:auto}.department{min-height:240px}
+ .employee-hero{min-height:calc(100vh - 104px);background-position:58% center}.hero-content{min-height:calc(100vh - 104px);padding:38px 14px 36px}.hero-stats{grid-template-columns:1fr 1fr}
  .result-bar{grid-template-columns:1fr auto}.result-bar span:nth-child(2){display:none}.result-bar span:last-child{text-align:right}
  .record-row{grid-template-columns:115px 1fr}.modal-body{padding:20px}.modal-big{font-size:56px}
 }
@@ -293,11 +291,11 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
   <header class="site-header">
     <img class="brand-lockup" alt="Ansem's Cuck Factory" src="Assets/cuck-factory-logo.png" decoding="async">
     <nav class="nav" id="employeeNav">
-      <button data-scroll="record">EMPLOYEE RECORD</button>
+      <button data-page="employee-record.html">EMPLOYEE RECORD</button>
       <button data-action="invite">INVITE A CUCK</button>
-      <button data-scroll="departments">SHIFTS</button>
+      <button data-action="shifts">SHIFTS</button>
       <button data-action="cuckdrop">CUCKDROP</button>
-      <button data-scroll="broadcasts">WATCH</button>
+      <button data-action="watch">WATCH</button>
       <button data-action="buy">BUY $CUCKS</button>
     </nav>
     <div class="header-status" id="headerStatus"><small>FACTORY ACCESS</small><strong>ASSESSMENT REQUIRED</strong></div>
@@ -366,68 +364,31 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
           <div class="eyebrow">EMPLOYEE PORTAL · SECURE ACCESS</div>
           <div class="welcome-handle">WELCOME BACK,<br><span id="welcomeHandle">@CUCK</span></div>
           <div class="welcome-sub">Management has preserved your previous labour. Your assessment, shifts, scores, loyalty and future requirements remain attached to this record.</div>
+
           <div class="hero-stats">
             <div class="stat"><small>CUCKPOWER</small><strong id="heroPower">10,020</strong></div>
             <div class="stat cuckdrop-open"><small>CUCKDROP STATUS</small><strong class="active">ACTIVE</strong></div>
             <div class="stat"><small>SHIFTS COMPLETED</small><strong id="heroShifts">0</strong></div>
             <div class="stat"><small>LOYALTY CREDIT</small><strong id="heroLoyalty">+1</strong></div>
           </div>
-          <div class="hero-actions"><button class="primary" data-action="record">VIEW EMPLOYEE RECORD</button><button class="secondary" data-scroll="departments">START NEXT SHIFT</button></div>
+
+          <div class="hero-actions">
+            <button class="primary" data-page="employee-record.html">VIEW EMPLOYEE RECORD</button>
+            <button class="secondary" data-action="shifts">START NEXT SHIFT</button>
+          </div>
+          <div class="home-note">Your file remains active until Management decides otherwise.</div>
         </div>
-
-        <aside class="record-preview" id="record">
-          <div class="record-clip"></div><div class="record-head"><span>ANSEM'S CUCK FACTORY</span><span id="recordId">EMPLOYEE #00000</span></div>
-          <div class="record-body"><h3>EMPLOYEE RECORD</h3>
-            <div class="record-row"><span>X HANDLE</span><strong id="recordHandle">@CUCK</strong></div>
-            <div class="record-row"><span>WALLET</span><strong id="recordWallet">—</strong></div>
-            <div class="record-row"><span>CLASSIFICATION</span><strong id="recordClass">ENORMOUS CUCK</strong></div>
-            <div class="record-row"><span>ASSESSMENT POWER</span><strong id="recordPower">10,020</strong></div>
-            <div class="record-row"><span>GAMES / SHIFTS</span><strong id="recordShifts">0</strong></div>
-            <div class="record-row"><span>RECRUITS</span><strong id="recordRecruits">0</strong></div>
-            <div class="record-row"><span>CUCKDROP READINESS</span><strong id="recordReadiness">98.70%</strong></div>
-            <div class="record-stamp">RETAINED FOR FURTHER USE</div>
-          </div>
-        </aside>
       </div>
+      <div class="home-footer">ANSEM'S CUCK FACTORY · EMPLOYEE ACCESS TERMINAL</div>
     </section>
-
-    <div class="hub-grid">
-      <div class="hub-left">
-        <section class="panel" id="departments">
-          <div class="panel-head"><div><div class="panel-kicker">WORK ASSIGNMENTS</div><div class="panel-title">Available Factory Departments</div></div><div class="panel-meta">COMPLETE SHIFTS · INCREASE CUCKPOWER</div></div>
-          <div class="department-grid">
-            <article class="department"><div class="dept-no">DEPT 01 · VOLUNTARY LABOUR</div><div class="dept-title">Mandatory Posting Terminal</div><div class="dept-copy">Type an Ansem management memo faster than three recorded workers. Accuracy is adjusted. The carrot is not.</div><div class="dept-stats"><div><span>BEST FACTORY SCORE</span><strong id="typingBest">—</strong></div><div><span>SHIFTS</span><strong id="typingCount">0</strong></div></div><button class="primary" data-game="typing">START SHIFT</button></article>
-            <article class="department"><div class="dept-no">DEPT 02 · ORGANIC COMMUNITY GROWTH</div><div class="dept-title">Ansem Response Review</div><div class="dept-copy">Select the strongest possible reply to ten Ansem posts. Praise quickly. Traces of independent thought may affect your file.</div><div class="dept-stats"><div><span>BEST COMMUNITY VALUE</span><strong id="communityBest">—</strong></div><div><span>SHIFTS</span><strong id="communityCount">0</strong></div></div><button class="primary" data-game="community">START SHIFT</button></article>
-            <article class="department locked"><div class="dept-no">DEPT 03 · CLASSIFIED</div><div class="dept-title">Next Requirement</div><div class="dept-copy">Management is currently inventing an unrelated requirement that will almost certainly improve your eligibility.</div><div class="dept-stats"><div><span>STATUS</span><strong>SOON™</strong></div><div><span>COMPENSATION</span><strong>IMPLIED</strong></div></div><button class="secondary" disabled>AWAIT ASSIGNMENT</button></article>
-          </div>
-        </section>
-
-        <section class="panel" id="broadcasts">
-          <div class="panel-head"><div><div class="panel-kicker">FACTORY SURVEILLANCE</div><div class="panel-title">Management Is Monitoring</div></div><div class="panel-meta">CAM 04 · LIVE</div></div>
-          <div class="cam-grid">
-            <div class="crt"><div class="crt-top"><span>MANAGEMENT CAM 04</span><span class="live">● REC</span></div><div class="crt-face">CAM FEED<small>CANONICAL FOUNDER PLATE GOES HERE</small></div><div class="panel-meta" style="margin-top:9px">This concept deliberately avoids inventing a non-canon Founder image.</div></div>
-            <div class="terminal"><small>MANAGEMENT ANNOUNCEMENT · INTERNAL</small><div class="terminal-message" id="announcement">ATTENTION EMPLOYEES.<br><br>THE CUCKDROP REMAINS IMMINENT.</div></div>
-          </div>
-        </section>
-      </div>
-
-      <aside class="hub-right">
-        <section class="panel cuckdrop-card" id="cuckdropCard"><div class="panel-kicker">DISTANCE TO CUCKDROP</div><div class="readiness" id="readinessValue">98.70%<small>ACTIVE</small></div><div class="bar"><span id="readinessBar"></span></div><div><span class="carrot">🥕</span></div><div class="cuckdrop-copy">KEEP WORKING, EMPLOYEE. THE CARROT MOVES. ALWAYS.<br><br>Click to inspect eligibility file.</div></section>
-        <section class="panel"><div class="panel-kicker">PROJECTED CUCKDROP*</div><div class="panel-title" style="font-size:39px;margin-top:8px" id="allocationValue">1,002,000 $CUCKS</div><div class="cuckdrop-copy">Based on current Cuckpower and visible productivity. *Non-binding Management estimate. Not guaranteed. Never.</div></section>
-        <section class="panel"><div class="panel-kicker">INVITE A CUCK</div><div class="panel-title">Recruitment Credit</div><div class="copy" style="font-size:10px">Every recruit gives Management another reason to keep your file open.</div><div class="invite-code"><input id="inviteLink" readonly><button class="secondary" id="copyInvite">COPY</button></div><button class="secondary" id="mockRecruit" style="width:100%;margin-top:8px">LOG TEST RECRUIT</button></section>
-        <section class="panel activity-panel"><div class="panel-head"><div><div class="panel-kicker">PERMANENT FILE</div><div class="panel-title">Activity Log</div></div></div><div class="activity" id="activity"></div></section>
-      </aside>
-    </div>
   </main>
 </div>
 
 <div class="modal-wrap hidden" id="cuckdropModal"><div class="modal"><div class="modal-head"><span>ANSEM'S CUCK FACTORY · AIRDROP ELIGIBILITY FILE</span><button class="close" data-close="cuckdropModal">×</button></div><div class="modal-body"><div class="result-kicker" style="text-align:center">CURRENT ELIGIBILITY</div><div class="modal-big" id="modalReadiness">98.70%<small>CUCKDROP STATUS: ACTIVE</small></div><div class="checks" id="eligibilityChecks"></div><div class="modal-verdict"><div class="result-kicker">MANAGEMENT VERDICT</div><strong>Exceptional progress. One additional requirement is expected shortly.</strong></div><div class="disclaimer">Projected eligibility and allocation are satirical in-world Management estimates only. No result, action, post, score or shift guarantees tokens, money or future value.</div></div></div></div>
 
-<div class="modal-wrap hidden" id="recordModal"><div class="modal"><div class="modal-head"><span>EMPLOYEE PERFORMANCE DOSSIER</span><button class="close" data-close="recordModal">×</button></div><div class="modal-body" id="recordModalBody"></div></div></div>
-
 <div class="toast" id="toast"><b>FACTORY SYSTEM</b><span id="toastText"></span></div>
 
-<div class="dev"><button id="devToggle">CONCEPT CONTROLS</button><div class="dev-panel hidden" id="devPanel"><small>LOCAL PROTOTYPE ONLY</small><button id="devReset">RESET → NEW CUCK</button><button id="devTyping">SIMULATE COMPLETED TYPING SHIFT</button><button id="devCommunity">SIMULATE COMPLETED COMMUNITY SHIFT</button><button id="devClearIntro">REPLAY INTRO / ROUTING</button></div></div>
+<div class="dev"><button id="devToggle">CONCEPT CONTROLS</button><div class="dev-panel hidden" id="devPanel"><small>LOCAL PROTOTYPE ONLY</small><button id="devReset">RESET → NEW CUCK</button><button id="devClearIntro">REPLAY INTRO / ROUTING</button></div></div>
 
 <script>
 (() => {
@@ -600,7 +561,6 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
     $('qProgressFill').style.width=((i+1)/QUESTIONS.length*100)+'%';
     $('questionCopy').textContent=item.q;
     $('answers').innerHTML=item.a.map((x,n)=>`<button class="answer" data-answer="${n}"><span class="answer-key">${String.fromCharCode(65+n)}</span><span class="answer-text">${esc(x[0])}</span></button>`).join('');
-    [...$('answers').querySelectorAll('[data-answer]')].forEach(btn=>btn.onclick=()=>selectAnswer(Number(btn.dataset.answer)));
   }
   function selectAnswer(index){
     const i=draft.answers.length, choice=QUESTIONS[i].a[index];
@@ -655,15 +615,7 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
     $('headerStatus').innerHTML=`<small>${esc(e.employeeId)} · RECORD ACTIVE</small><strong>● EMPLOYED</strong>`;
     const r=readiness(e), a=allocation(e), shiftN=(e.shifts||[]).length;
     $('welcomeHandle').textContent=e.handle; $('heroPower').textContent=fmt(e.assessment.power); $('heroShifts').textContent=shiftN; $('heroLoyalty').textContent='+'+(e.loyalty||1);
-    $('recordId').textContent='EMPLOYEE '+e.employeeId.replace('CF-','#'); $('recordHandle').textContent=e.handle; $('recordWallet').textContent=shortWallet(e.wallet); $('recordClass').textContent=e.assessment.classification; $('recordPower').textContent=fmt(e.assessment.power); $('recordShifts').textContent=shiftN; $('recordRecruits').textContent=e.recruits||0; $('recordReadiness').textContent=r.toFixed(2)+'%';
-    $('readinessValue').innerHTML=r.toFixed(2)+'%<small>ACTIVE</small>'; $('readinessBar').style.width=r+'%'; $('allocationValue').textContent=fmt(a)+' $CUCKS';
-    $('typingBest').textContent=best(e,'typing')?fmt(best(e,'typing'))+' PTS':'—'; $('typingCount').textContent=count(e,'typing'); $('communityBest').textContent=best(e,'community')?fmt(best(e,'community')):'—'; $('communityCount').textContent=count(e,'community');
-    $('inviteLink').value=`https://cucks.money/r/${e.employeeId.replace('CF-','').toLowerCase()}`;
-    renderActivity(e); renderModals(e);
-  }
-  function renderActivity(e){
-    const events=(e.events||[]).slice(0,9);
-    $('activity').innerHTML=events.length?events.map(ev=>`<div class="event"><div class="event-dot"></div><div><strong>${esc(ev.label)}</strong><span>${esc(ev.detail||ev.type)}</span></div><time>${new Date(ev.at).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</time></div>`).join(''):'<div class="copy" style="font-size:10px">No recorded labour yet.</div>';
+    renderModals(e);
   }
   function renderModals(e){
     const r=readiness(e);
@@ -674,19 +626,6 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
       [(e.recruits||0)?'✓':'○','RECRUITMENT ACTIVITY',(e.recruits||0)?`${e.recruits} CUCK${e.recruits===1?'':'S'}`:'OPTIONAL'],['⟳','FINAL MANAGEMENT APPROVAL','PENDING']
     ];
     $('eligibilityChecks').innerHTML=checks.map(x=>`<div class="check"><b>${x[0]}</b><span>${x[1]}</span><em>${x[2]}</em></div>`).join('');
-    $('recordModalBody').innerHTML=`
-      <div class="result-kicker">PERMANENT EMPLOYEE FILE</div>
-      <div style="font-family:var(--serif);font-size:48px;margin:8px 0 20px">${esc(e.handle)}</div>
-      <div class="record-row"><span>EMPLOYEE ID</span><strong>${esc(e.employeeId)}</strong></div>
-      <div class="record-row"><span>CLASSIFICATION</span><strong>${esc(e.assessment.classification)}</strong></div>
-      <div class="record-row"><span>CUCKPOWER</span><strong>${fmt(e.assessment.power)}</strong></div>
-      <div class="record-row"><span>CUCKDROP READINESS</span><strong>${r.toFixed(2)}%</strong></div>
-      <div class="record-row"><span>PROJECTED ALLOCATION*</span><strong>${fmt(allocation(e))} $CUCKS</strong></div>
-      <div class="record-row"><span>SHIFTS COMPLETED</span><strong>${(e.shifts||[]).length}</strong></div>
-      <div class="record-row"><span>RECRUITS</span><strong>${e.recruits||0}</strong></div>
-      <div class="record-row"><span>LOYALTY CREDIT</span><strong>+${e.loyalty||1}</strong></div>
-      <div class="modal-verdict"><strong>Employee has demonstrated a statistically interesting inability to leave.</strong></div>
-      <div class="disclaimer">*Visible value only. Material value remains spiritually implied.</div>`;
   }
 
   function simulateShift(type){
@@ -710,40 +649,17 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:998;opa
   });
   [...document.querySelectorAll('[data-scroll]')].forEach(btn=>btn.onclick=()=>document.getElementById(btn.dataset.scroll)?.scrollIntoView({behavior:'smooth',block:'start'}));
   [...document.querySelectorAll('.cuckdrop-open')].forEach(x=>x.onclick=()=>openModal('cuckdropModal'));
-  $('cuckdropCard').onclick=()=>{trackFactoryEvent('cuckdrop_opened');openModal('cuckdropModal')};
   function openModal(id){ $(id).classList.remove('hidden'); document.body.style.overflow='hidden'; }
   function closeModal(id){ $(id).classList.add('hidden'); document.body.style.overflow=''; }
   [...document.querySelectorAll('[data-close]')].forEach(b=>b.onclick=()=>closeModal(b.dataset.close));
-  [...document.querySelectorAll('.modal-wrap')].forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
-
-  $('copyInvite').onclick=async()=>{ try{await navigator.clipboard.writeText($('inviteLink').value);trackFactoryEvent('invite_link_copied');showToast('Recruitment link copied. Management appreciates your network.')}catch{showToast('Copy unavailable here. Select the recruitment link manually.')} };
-  $('mockRecruit').onclick=()=>{const e=loadEmployee();if(!e)return;e.recruits=(e.recruits||0)+1;e.loyalty=(e.loyalty||1)+1;logEvent(e,'recruit','NEW CUCK RECRUITED',`Recruit #${e.recruits} · Loyalty +1`);saveEmployee(e,'recruit_logged');renderEmployee(e);showToast('Recruit registered. Your projected Cuckdrop has become more emotionally convincing.');};
-
-  // Shared integration surface for the two Factory games. A game can call this after a completed shift.
-  window.CuckFactoryPortal={
-    getEmployee:()=>loadEmployee(),
-    recordShift:(result={})=>{
-      const e=loadEmployee(); if(!e)return false;
-      const type=result.type==='community'?'community':'typing';
-      const score=Math.max(0,Number(result.score||0));
-      e.shifts ||= [];
-      e.shifts.push({id:result.id||'SHIFT-'+Date.now(),type,score,at:result.at||nowISO(),meta:result.meta||{}});
-      e.loyalty=(e.loyalty||1)+1;
-      logEvent(e,'shift',type==='typing'?'VOLUNTARY LABOUR SHIFT RECORDED':'COMMUNITY GROWTH SHIFT RECORDED',`${fmt(score)} ${type==='typing'?'Factory Score':'Community Value'} · Loyalty +1`);
-      saveEmployee(e,'shift_completed');
-      renderEmployee(e);
-      return true;
-    },
-    track:(type,detail={})=>trackFactoryEvent(type,detail)
-  };
+  [...document.querySelectorAll('.modal-wrap')].forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));trackFactoryEvent('invite_link_copied');showToast('Recruitment link copied. Management appreciates your network.')}catch{showToast('Copy unavailable here. Select the recruitment link manually.')} };
 
   // Concept controls
   $('devToggle').onclick=()=>$('devPanel').classList.toggle('hidden');
   $('devReset').onclick=()=>{localStorage.removeItem(STORE);localStorage.removeItem(ONBOARD);location.reload()};
-  $('devTyping').onclick=()=>simulateShift('typing'); $('devCommunity').onclick=()=>simulateShift('community');
   $('devClearIntro').onclick=()=>location.reload();
 
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape'){['cuckdropModal','recordModal'].forEach(id=>{if(!$(id).classList.contains('hidden'))closeModal(id)})} });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'){['cuckdropModal'].forEach(id=>{if(!$(id).classList.contains('hidden'))closeModal(id)})} });
 })();
 </script>
 </body>
