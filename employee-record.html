@@ -3,24 +3,36 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ansem's Cuck Factory — Employee Record v8</title>
+<title>Ansem's Cuck Factory — Employee Record v9</title>
 <link rel="preload" href="Assets/lockeremployee.webp" as="image" type="image/webp">
 <link rel="preload" href="Assets/cuck-factory-logo.png" as="image" type="image/png">
 <style>
 :root{
-  --ink:#0b0706;--cream:#f5ead0;--muted:#a98e72;--red:#8f211b;--amber:#ca9440;
-  --gold:#e3bd68;--green:#839867;--line:#4b3224;--paper:#e8d7ae;
+  --bg:#080504;
+  --ink:#22120d;
+  --ink-soft:#5e4836;
+  --paper:#dfc89e;
+  --paper-line:rgba(70,45,28,.17);
+  --paper-edge:#8a6f4d;
+  --cream:#f5ead0;
+  --amber:#ca9440;
+  --green:#88986f;
+  --line:#5d3926;
+  --red:#8d2a22;
+  --red-dark:#6a1f18;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
-  --serif:Georgia,"Times New Roman",serif
+  --serif:Georgia,"Times New Roman",serif;
 }
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:#080504;color:var(--cream)}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--cream)}
 body{font-family:var(--mono)}
 button{font:inherit;cursor:pointer}
+img{display:block;max-width:100%}
+
 .site-header{
   position:sticky;top:0;z-index:20;display:grid;
   grid-template-columns:minmax(230px,auto) minmax(0,1fr) minmax(190px,auto);
-  align-items:stretch;min-height:72px;padding:0 22px;border-bottom:1px solid #5d3926;
+  align-items:stretch;min-height:72px;padding:0 22px;border-bottom:1px solid var(--line);
   background:rgba(8,5,4,.975);backdrop-filter:blur(12px)
 }
 .brand-lockup{width:238px;align-self:center;padding-right:24px}
@@ -31,175 +43,111 @@ button{font:inherit;cursor:pointer}
 }
 .nav button:last-child{border-right:1px solid rgba(114,80,57,.34)}
 .nav button:hover{color:var(--cream);background:rgba(138,74,33,.08)}
-.header-status{display:flex;flex-direction:column;justify-content:center;text-align:right;border-left:1px solid var(--line);padding-left:22px;margin-left:18px}
+.header-status{display:flex;flex-direction:column;justify-content:center;text-align:right;border-left:1px solid rgba(93,57,38,.8);padding-left:22px;margin-left:18px}
 .header-status small{color:#b59b7d;font-size:8px;letter-spacing:.15em}
 .header-status strong{color:var(--green);font-size:11px;letter-spacing:.08em;margin-top:5px}
+
 .page{
   min-height:calc(100vh - 72px);
+  position:relative;overflow:hidden;
   background:
-    linear-gradient(90deg,rgba(5,4,3,.92),rgba(5,4,3,.48) 45%,rgba(5,4,3,.84)),
-    url("Assets/lockerroom.webp") center 45% / cover no-repeat fixed;
-  padding:42px 5vw 64px
+    linear-gradient(90deg,rgba(6,4,3,.66) 0%,rgba(6,4,3,.42) 28%,rgba(6,4,3,.22) 48%,rgba(6,4,3,.30) 68%,rgba(6,4,3,.58) 100%),
+    linear-gradient(180deg,rgba(6,4,3,.16),rgba(6,4,3,.46)),
+    url("Assets/lockeremployee.webp") center center / cover no-repeat;
 }
-.eyebrow{font-size:9px;letter-spacing:.22em;color:var(--amber)}
-.layout{
-  position:relative;z-index:2;
-  width:100%;min-height:calc(100vh - 72px);
-  margin:0;
-  display:block
+.page:before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.1;
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,.028) 0,rgba(255,255,255,.028) 1px,transparent 1px,transparent 4px)
+}
+.page:after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 160px rgba(0,0,0,.62)
 }
 
-
-
-.back{
-  position:absolute;left:28px;bottom:26px;z-index:4;
-  margin:0;border:1px solid rgba(202,148,64,.78);
-  background:rgba(13,9,7,.88);backdrop-filter:blur(5px);
+.scene-ui{position:relative;z-index:2;min-height:calc(100vh - 72px)}
+.scene-tag{
+  position:absolute;left:32px;top:28px;
+  padding:9px 12px;border:1px solid rgba(202,148,64,.42);
+  background:rgba(12,8,6,.72);color:#d0a557;font-size:8px;letter-spacing:.18em
+}
+.return-bar{
+  position:absolute;left:32px;bottom:28px;display:flex;align-items:center;gap:10px;z-index:4
+}
+.return-btn{
+  border:1px solid rgba(202,148,64,.75);background:rgba(13,9,7,.88);backdrop-filter:blur(5px);
   color:var(--cream);padding:12px 16px;font-weight:800;letter-spacing:.08em
 }
+.return-btn:hover{background:#22140f}
+.return-note{font-size:7px;letter-spacing:.16em;color:#a38667}
 
-
-
-
-
-
-.back:hover{background:#22140f}
-
-
-
-.archive-plaque{
-  position:absolute;left:28px;top:28px;z-index:4;
-  padding:9px 12px;
-  border:1px solid rgba(202,148,64,.42);
-  background:rgba(12,8,6,.72);
-  color:#d0a557;
-  font-size:8px;letter-spacing:.18em
-}
-.back:hover{background:#24140f}
-
-/* Personnel sheet is part of the room, not a second page floating over it */
-.record{
-  position:absolute;
-  z-index:3;
-  right:3.7vw;
-  top:50%;
-  transform:translateY(-48%) rotate(-.15deg);
-  width:min(390px,31vw);
-  max-height:calc(100vh - 118px);
-  overflow:auto;
-  color:#2e170f;
-  border:1px solid #6f573d;
+.wall-record{
+  position:absolute;left:0;top:0;z-index:4;
+  width:440px;min-width:0;
+  border:1px solid rgba(106,79,52,.85);
+  color:var(--ink);
   background:
-    linear-gradient(rgba(80,48,26,.035),rgba(80,48,26,.035)),
-    repeating-linear-gradient(to bottom,rgba(83,54,31,.07) 0,rgba(83,54,31,.07) 1px,transparent 1px,transparent 28px),
-    #d6c092;
-  box-shadow:0 12px 30px rgba(0,0,0,.28);
-}
-.record:before{
-  content:"";position:absolute;inset:0;pointer-events:none;opacity:.24;
-  background:
-    radial-gradient(circle at 10% 12%,rgba(91,60,35,.18) 0 1px,transparent 1.6px),
-    radial-gradient(circle at 82% 28%,rgba(91,60,35,.12) 0 1px,transparent 1.7px),
-    radial-gradient(circle at 48% 81%,rgba(91,60,35,.13) 0 1px,transparent 1.5px);
-  background-size:56px 53px,71px 67px,64px 74px
-}
-.clip{
-  height:18px;width:82px;border:3px solid #4c4338;border-bottom:0;
-  border-radius:18px 18px 0 0;margin:-17px auto 0;background:#776955
+    repeating-linear-gradient(to bottom,transparent 0,transparent 28px,var(--paper-line) 28px,var(--paper-line) 29px),
+    radial-gradient(circle at 12% 10%,rgba(98,67,39,.12) 0 1px,transparent 1.8px),
+    radial-gradient(circle at 84% 22%,rgba(98,67,39,.10) 0 1px,transparent 1.9px),
+    rgba(223,200,158,.985);
+  box-shadow:0 8px 20px rgba(0,0,0,.22), 0 0 0 1px rgba(62,37,21,.12) inset;
+  transform:none;
+  will-change:left,top,width;
 }
 .record-head{
-  position:relative;z-index:1;
-  padding:13px 16px 12px;
-  border-bottom:2px solid #7c251f;
-  color:#2d1710;
-  display:flex;justify-content:space-between;gap:12px;
-  font-size:8px;font-weight:800;letter-spacing:.12em
+  display:flex;justify-content:space-between;gap:12px;align-items:center;
+  padding:15px 18px 12px;border-bottom:2px solid #8a3026;
+  font-size:8px;font-weight:900;letter-spacing:.14em
 }
-.record-body{
-  position:relative;z-index:1;
-  padding:17px 18px 18px;
-  background:transparent
+.record-body{padding:18px 18px 16px}
+.record-body h1{
+  margin:0 0 18px;font-family:var(--serif);font-size:34px;line-height:.93;color:#3a1d12
 }
-.record h2{
-  font-family:var(--serif);
-  font-size:34px;
-  line-height:.95;
-  margin:2px 0 16px;
-  color:#35180f
-}
+.record-grid{display:grid;gap:0}
 .row{
-  display:grid;grid-template-columns:138px 1fr;
-  gap:10px;padding:7px 0;
-  border-bottom:1px solid rgba(78,48,29,.20);
-  font-size:8px
+  display:grid;grid-template-columns:140px 1fr;gap:10px;padding:7px 0;border-bottom:1px solid rgba(78,48,29,.20);
+  font-size:8px;letter-spacing:.03em
 }
 .row span{color:#6e583f}
-.row strong{text-align:right;color:#2a160f}
-.carrots{margin:15px 0 8px;border-top:1px solid rgba(78,48,29,.22);padding-top:13px}
-.carrots-label{font-size:7px;letter-spacing:.14em;color:#6e583f}
-.carrot-row{font-size:23px;letter-spacing:3px;margin-top:8px;filter:saturate(.65) brightness(.92)}
-.share{
-  width:100%;margin-top:15px;
-  border:1px solid #6f3a2e;
-  background:linear-gradient(#8c2b23,#682019);
-  color:#efe1c5;padding:13px;font-weight:900;letter-spacing:.11em
+.row strong{text-align:right;color:#2a160f;font-weight:800}
+.section-label{margin-top:14px;font-size:7px;letter-spacing:.14em;color:#6e583f}
+.carrot-row{font-size:22px;letter-spacing:4px;margin-top:9px;filter:saturate(.68) brightness(.93)}
+.record-actions{margin-top:16px;display:grid;gap:10px}
+.share-btn,.download-btn{
+  width:100%;border:1px solid #6f3a2e;color:#efe1c5;padding:13px 14px;font-weight:900;letter-spacing:.11em
 }
+.share-btn{background:linear-gradient(#8f2b23,#6c1f18)}
+.download-btn{background:linear-gradient(#4c2419,#34160f)}
 .note{margin-top:10px;color:#6d5c48;font-size:7px;line-height:1.5}
 
-/* legacy record declaration overridden below */
-
-
-
-
-
-
-
-
-
-
-
-
-body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.10;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 4px)}
 @media(max-width:980px){
   .site-header{grid-template-columns:1fr auto;padding:8px 10px 0}
-  .brand-lockup{width:185px;padding-bottom:8px}.header-status{border:0;margin:0;padding:0 0 8px 10px}
+  .brand-lockup{width:185px;padding-bottom:8px}
+  .header-status{border:0;margin:0;padding:0 0 8px 10px}
   .nav{grid-column:1/-1;overflow-x:auto;justify-content:flex-start;border-top:1px solid rgba(114,80,57,.35)}
   .nav button{min-width:auto;padding:0 14px;min-height:42px;font-size:8px}
-  .page{min-height:calc(100vh - 104px);background-position:35% center}
-  .record{
-    right:14px;top:50%;width:min(380px,44vw);
-    max-height:calc(100vh - 135px)
-  }
-  .archive-plaque{left:14px;top:14px}
-  .back{left:14px;bottom:14px}
+  .page{min-height:calc(100vh - 104px);background-position:28% center}
+  .scene-ui{min-height:calc(100vh - 104px)}
+  .scene-tag{left:14px;top:14px}
+  .return-bar{left:14px;bottom:14px;flex-direction:column;align-items:flex-start;gap:6px}
 }
 @media(max-width:700px){
   .page{
-    min-height:auto;
-    padding:330px 12px 18px;
-    background-size:auto 360px;
-    background-position:31% top;
-    background-repeat:no-repeat;
-    background-color:#080504
+    min-height:auto;background-position:30% top;background-size:auto 380px;background-repeat:no-repeat;background-color:var(--bg);
+    padding:260px 12px 18px
   }
   .page:after{box-shadow:none}
-  .layout{min-height:auto}
-  .archive-plaque{top:12px;left:12px}
-  .back{position:static;width:100%;margin:12px 0 0}
-  .record{
-    position:relative;right:auto;top:auto;transform:none;
-    width:100%;max-height:none;margin:0 auto
+  .scene-ui{min-height:auto}
+  .scene-tag{position:static;display:inline-block;margin-bottom:12px}
+  .wall-record{
+    position:relative;left:auto;top:auto;width:100%;min-width:0;margin:0 auto
   }
-  .row{grid-template-columns:120px 1fr}
-  .record h2{font-size:32px}
-}
-  .locker-image{object-position:34% center}
-  .scene-label{left:12px;top:12px}
-  .scene-actions{left:12px;right:12px;bottom:12px;display:block}
-  .locker-caption{display:none}
-  .back{width:100%}
-  .record h2{font-size:34px}
-  .row{grid-template-columns:125px 1fr}
+  .record-body h1{font-size:31px}
+  .row{grid-template-columns:118px 1fr}
+  .record-actions{gap:8px}
+  .return-bar{position:static;margin-top:12px;align-items:stretch}
+  .return-btn{width:100%}
+  .return-note{display:none}
 }
 </style>
 </head>
@@ -218,32 +166,43 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opa
 </header>
 
 <main class="page">
-  <div class="layout">
-    <div class="archive-plaque">PERSONNEL ARCHIVE · ASSIGNED LOCKER</div>
-    <button class="back" onclick="location.href='index.html'">← RETURN TO LOCKER ROOM</button>
+  <div class="scene-ui">
+    <div class="scene-tag">PERSONNEL ARCHIVE · ASSIGNED LOCKER</div>
 
-    <aside class="record">
-      <div class="clip"></div>
-      <div class="record-head"><span>ANSEM'S CUCK FACTORY</span><span id="recordId">EMPLOYEE #00000</span></div>
+    <section class="wall-record" id="recordSheet">
+      <div class="record-head">
+        <span>ANSEM'S CUCK FACTORY</span>
+        <span id="recordId">EMPLOYEE #00000</span>
+      </div>
       <div class="record-body">
-        <h2>EMPLOYEE RECORD</h2>
-        <div class="row"><span>X HANDLE</span><strong id="recordHandle">—</strong></div>
-        <div class="row"><span>WALLET</span><strong id="recordWallet">—</strong></div>
-        <div class="row"><span>CLASSIFICATION</span><strong id="recordClass">—</strong></div>
-        <div class="row"><span>CUCKPOWER</span><strong id="recordPower">—</strong></div>
-        <div class="row"><span>SHIFTS COMPLETED</span><strong id="recordShifts">0</strong></div>
-        <div class="row"><span>RECRUITS</span><strong id="recordRecruits">0</strong></div>
-        <div class="row"><span>LOYALTY CREDIT</span><strong id="recordLoyalty">+1</strong></div>
-        <div class="row"><span>CUCKDROP STATUS</span><strong>ACTIVE</strong></div>
-        <div class="row"><span>CUCKDROP READINESS</span><strong id="recordReadiness">98.30%</strong></div>
-        <div class="carrots">
-          <div class="carrots-label">GOLDEN CARROTS · LOCKER INVENTORY</div>
-          <div class="carrot-row" id="carrotRow">🥕 🥕 🥕 🥕 ◌</div>
+        <h1>EMPLOYEE RECORD</h1>
+        <div class="record-grid">
+          <div class="row"><span>X HANDLE</span><strong id="recordHandle">—</strong></div>
+          <div class="row"><span>WALLET</span><strong id="recordWallet">—</strong></div>
+          <div class="row"><span>CLASSIFICATION</span><strong id="recordClass">—</strong></div>
+          <div class="row"><span>CUCKPOWER</span><strong id="recordPower">—</strong></div>
+          <div class="row"><span>SHIFTS COMPLETED</span><strong id="recordShifts">0</strong></div>
+          <div class="row"><span>RECRUITS</span><strong id="recordRecruits">0</strong></div>
+          <div class="row"><span>LOYALTY CREDIT</span><strong id="recordLoyalty">+1</strong></div>
+          <div class="row"><span>CUCKDROP STATUS</span><strong id="recordStatus">ACTIVE</strong></div>
+          <div class="row"><span>CUCKDROP READINESS</span><strong id="recordReadiness">98.30%</strong></div>
         </div>
-        <button class="share" id="shareBtn">SHARE YOUR RECORD</button>
+
+        <div class="section-label">GOLDEN CARROTS · LOCKER INVENTORY</div>
+        <div class="carrot-row" id="carrotRow">🥕 🥕 🥕 🥕 ◌</div>
+
+        <div class="record-actions">
+          <button class="share-btn" id="shareBtn">SHARE YOUR RECORD</button>
+          <button class="download-btn" id="downloadBtn">SAVE RECORD TEXT</button>
+        </div>
         <div class="note">Visible progress does not create a right to tokens, money, allocation or future value. Management remains optimistic.</div>
       </div>
-    </aside>
+    </section>
+
+    <div class="return-bar">
+      <button class="return-btn" onclick="location.href='index.html'">← RETURN TO LOCKER ROOM</button>
+      <span class="return-note">PROPERTY OF MANAGEMENT · ACCESS LOGGED</span>
+    </div>
   </div>
 </main>
 
@@ -254,6 +213,29 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opa
   const $=id=>document.getElementById(id);
   const fmt=n=>Number(n||0).toLocaleString('en-US');
   const shortWallet=v=>!v?'—':(v.length>15?v.slice(0,7)+'…'+v.slice(-5):v);
+
+  const BG_W=1672, BG_H=941;
+  const POSTER={x:941,y:106,w:451,h:609};
+  function fitRecordToPoster(){
+    const page=document.querySelector('.page');
+    const card=$('recordSheet');
+    if(!page||!card) return;
+    if(window.innerWidth<=700){
+      card.style.left=''; card.style.top=''; card.style.width='';
+      return;
+    }
+    const pageW=page.clientWidth, pageH=page.clientHeight;
+    const scale=Math.max(pageW/BG_W,pageH/BG_H);
+    const drawW=BG_W*scale, drawH=BG_H*scale;
+    const offsetX=(pageW-drawW)/2, offsetY=(pageH-drawH)/2;
+    const left=offsetX + POSTER.x*scale;
+    const top=offsetY + POSTER.y*scale;
+    const width=POSTER.w*scale;
+    card.style.left=Math.round(left)+'px';
+    card.style.top=Math.round(top)+'px';
+    card.style.width=Math.round(width)+'px';
+  }
+
 
   function localEmployee(){try{return JSON.parse(localStorage.getItem(STORE)||'null')}catch{return null}}
   async function cfRequest(path){
@@ -282,6 +264,9 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opa
     }
     return e;
   }
+  function shareText(e, r){
+    return `${e.handle||'I'} | ${fmt(e.assessment?.power||0)} Cuckpower | ${(e.shifts||[]).length} shifts | readiness ${r.toFixed(2)}% | Employee record remains active.`;
+  }
   function render(e){
     if(!e){location.href='index.html';return}
     const r=readiness(e),shifts=(e.shifts||[]).length;
@@ -294,20 +279,48 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opa
     $('recordShifts').textContent=shifts;
     $('recordRecruits').textContent=e.recruits||0;
     $('recordLoyalty').textContent='+'+(e.loyalty||1);
+    $('recordStatus').textContent='ACTIVE';
     $('recordReadiness').textContent=r.toFixed(2)+'%';
     const found=Math.max(1,Math.min(4,1+Math.floor(shifts/2)+(e.recruits?1:0)));
     $('carrotRow').textContent='🥕 '.repeat(found)+'◌ '.repeat(5-found);
+
+    $('shareBtn').onclick=async()=>{
+      const text=shareText(e,r);
+      if(navigator.share){
+        try{await navigator.share({title:'Ansem\'s Cuck Factory — Employee Record',text});return}catch{}
+      }
+      try{await navigator.clipboard.writeText(text);$('shareBtn').textContent='RECORD COPIED';setTimeout(()=>$('shareBtn').textContent='SHARE YOUR RECORD',1600)}catch{}
+    };
+    $('downloadBtn').onclick=()=>{
+      const text=[
+        'ANSEM\'S CUCK FACTORY — EMPLOYEE RECORD',
+        $('recordId').textContent,
+        `X HANDLE: ${$('recordHandle').textContent}`,
+        `WALLET: ${$('recordWallet').textContent}`,
+        `CLASSIFICATION: ${$('recordClass').textContent}`,
+        `CUCKPOWER: ${$('recordPower').textContent}`,
+        `SHIFTS COMPLETED: ${$('recordShifts').textContent}`,
+        `RECRUITS: ${$('recordRecruits').textContent}`,
+        `LOYALTY CREDIT: ${$('recordLoyalty').textContent}`,
+        `CUCKDROP STATUS: ${$('recordStatus').textContent}`,
+        `CUCKDROP READINESS: ${$('recordReadiness').textContent}`
+      ].join('\n');
+      const blob=new Blob([text],{type:'text/plain'});
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(blob);
+      a.download='employee-record.txt';
+      document.body.appendChild(a);a.click();a.remove();
+      setTimeout(()=>URL.revokeObjectURL(a.href),500);
+    };
   }
-  $('shareBtn').onclick=async()=>{
-    const e=await getEmployee(); if(!e)return;
-    const text=`${e.handle||'I'} · ${fmt(e.assessment?.power||0)} Cuckpower · ${(e.shifts||[]).length} shifts completed. Employee record remains active.`;
-    try{await navigator.clipboard.writeText(text);$('shareBtn').textContent='RECORD COPIED';setTimeout(()=>$('shareBtn').textContent='SHARE YOUR RECORD',1600)}catch{}
-  };
+
   $('shiftsBtn').onclick=()=>alert('Dedicated SHIFTS page will open here.');
   $('cuckdropBtn').onclick=()=>alert('Cuckdrop status page will open here.');
   $('watchBtn').onclick=()=>alert('Factory broadcasts will open here.');
   $('buyBtn').onclick=()=>alert('BUY $CUCKS destination will open here.');
-  getEmployee().then(render);
+
+  window.addEventListener('resize', fitRecordToPoster);
+  getEmployee().then(e=>{render(e); fitRecordToPoster();});
 })();
 </script>
 </body>
