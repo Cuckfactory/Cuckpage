@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ansem's Cuck Factory — Employee Record</title>
+<link rel="preload" href="Assets/lockerroom.webp" as="image" type="image/webp">
+<link rel="preload" href="Assets/cuck-factory-logo.png" as="image" type="image/png">
+<style>
+:root{
+  --ink:#0b0706;--cream:#f5ead0;--muted:#a98e72;--red:#8f211b;--amber:#ca9440;
+  --gold:#e3bd68;--green:#839867;--line:#4b3224;--paper:#e8d7ae;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --serif:Georgia,"Times New Roman",serif
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#080504;color:var(--cream)}
+body{font-family:var(--mono)}
+button{font:inherit;cursor:pointer}
+.site-header{
+  position:sticky;top:0;z-index:20;display:grid;
+  grid-template-columns:minmax(230px,auto) minmax(0,1fr) minmax(190px,auto);
+  align-items:stretch;min-height:72px;padding:0 22px;border-bottom:1px solid #5d3926;
+  background:rgba(8,5,4,.975);backdrop-filter:blur(12px)
+}
+.brand-lockup{width:238px;align-self:center;padding-right:24px}
+.nav{display:flex;align-items:stretch;justify-content:center;color:#d8c7ab;font-size:10px;letter-spacing:.075em}
+.nav button{
+  border:0;border-left:1px solid rgba(114,80,57,.34);background:transparent;color:inherit;
+  min-width:112px;padding:0 17px;font-weight:700
+}
+.nav button:last-child{border-right:1px solid rgba(114,80,57,.34)}
+.nav button:hover{color:var(--cream);background:rgba(138,74,33,.08)}
+.header-status{display:flex;flex-direction:column;justify-content:center;text-align:right;border-left:1px solid var(--line);padding-left:22px;margin-left:18px}
+.header-status small{color:#b59b7d;font-size:8px;letter-spacing:.15em}
+.header-status strong{color:var(--green);font-size:11px;letter-spacing:.08em;margin-top:5px}
+.page{
+  min-height:calc(100vh - 72px);
+  background:
+    linear-gradient(90deg,rgba(5,4,3,.92),rgba(5,4,3,.48) 45%,rgba(5,4,3,.84)),
+    url("Assets/lockerroom.webp") center 45% / cover no-repeat fixed;
+  padding:42px 5vw 64px
+}
+.eyebrow{font-size:9px;letter-spacing:.22em;color:var(--amber)}
+.layout{width:min(1240px,100%);margin:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,430px);gap:28px;align-items:start}
+.scene-card{
+  min-height:640px;border:1px solid rgba(203,148,64,.32);
+  background:linear-gradient(180deg,rgba(8,6,5,.26),rgba(8,6,5,.68));
+  display:flex;flex-direction:column;justify-content:flex-end;padding:28px
+}
+.scene-card h1{font-family:var(--serif);font-size:clamp(46px,6vw,84px);font-weight:400;line-height:.92;margin:10px 0}
+.scene-card p{color:#cbb89d;max-width:520px;line-height:1.6;font-size:12px}
+.back{margin-top:18px;border:1px solid #c78d43;background:#17100d;color:var(--cream);padding:13px 18px;font-weight:800;letter-spacing:.08em}
+.record{
+  background:var(--paper);color:#2e170f;border:1px solid #a78459;
+  box-shadow:0 22px 70px rgba(0,0,0,.5)
+}
+.clip{height:22px;width:96px;border:3px solid #5a4a36;border-bottom:0;border-radius:22px 22px 0 0;margin:-19px auto 0;background:#8b765b}
+.record-head{padding:15px 18px;border-bottom:2px solid var(--red);display:flex;justify-content:space-between;gap:12px;font-size:9px;font-weight:800;letter-spacing:.12em}
+.record-body{padding:20px;background:repeating-linear-gradient(to bottom,rgba(74,45,24,.08) 0,rgba(74,45,24,.08) 1px,transparent 1px,transparent 29px)}
+.record h2{font-family:var(--serif);font-size:37px;margin:0 0 17px}
+.row{display:grid;grid-template-columns:155px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid rgba(78,48,29,.18);font-size:9px}
+.row span{color:#745a3f}.row strong{text-align:right}
+.carrots{margin:18px 0 9px;border-top:1px solid rgba(78,48,29,.2);padding-top:14px}
+.carrots-label{font-size:8px;letter-spacing:.14em;color:#745a3f}
+.carrot-row{font-size:27px;letter-spacing:4px;margin-top:8px;filter:saturate(.72)}
+.share{
+  width:100%;margin-top:18px;border:1px solid #8d5e3c;background:linear-gradient(#9d3027,#731d18);
+  color:#fff0d4;padding:14px;font-weight:900;letter-spacing:.11em
+}
+.note{margin-top:12px;color:#765e45;font-size:8px;line-height:1.55}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.10;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 4px)}
+@media(max-width:900px){
+  .site-header{grid-template-columns:1fr auto;padding:8px 10px 0}
+  .brand-lockup{width:185px;padding-bottom:8px}.header-status{border:0;margin:0;padding:0 0 8px 10px}
+  .nav{grid-column:1/-1;overflow-x:auto;justify-content:flex-start;border-top:1px solid rgba(114,80,57,.35)}
+  .nav button{min-width:auto;padding:0 14px;min-height:42px;font-size:8px}
+  .layout{grid-template-columns:1fr}.scene-card{min-height:330px}.record{max-width:520px}
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <img class="brand-lockup" alt="Ansem's Cuck Factory" src="Assets/cuck-factory-logo.png">
+  <nav class="nav">
+    <button onclick="location.href='index.html'">HOME</button>
+    <button onclick="location.href='employee-record.html'">EMPLOYEE RECORD</button>
+    <button id="shiftsBtn">SHIFTS</button>
+    <button id="cuckdropBtn">CUCKDROP</button>
+    <button id="watchBtn">WATCH</button>
+    <button id="buyBtn">BUY $CUCKS</button>
+  </nav>
+  <div class="header-status" id="headerStatus"><small>EMPLOYEE FILE</small><strong>● ACTIVE</strong></div>
+</header>
+
+<main class="page">
+  <div class="layout">
+    <section class="scene-card">
+      <div class="eyebrow">PERSONNEL ARCHIVE · AUTHORIZED EMPLOYEE</div>
+      <h1>YOUR<br>EMPLOYEE<br>RECORD</h1>
+      <p>Everything Management has chosen to remember about you remains permanently attached to this file.</p>
+      <div><button class="back" onclick="location.href='index.html'">← RETURN TO LOCKER ROOM</button></div>
+    </section>
+
+    <aside class="record">
+      <div class="clip"></div>
+      <div class="record-head"><span>ANSEM'S CUCK FACTORY</span><span id="recordId">EMPLOYEE #00000</span></div>
+      <div class="record-body">
+        <h2>EMPLOYEE RECORD</h2>
+        <div class="row"><span>X HANDLE</span><strong id="recordHandle">—</strong></div>
+        <div class="row"><span>WALLET</span><strong id="recordWallet">—</strong></div>
+        <div class="row"><span>CLASSIFICATION</span><strong id="recordClass">—</strong></div>
+        <div class="row"><span>CUCKPOWER</span><strong id="recordPower">—</strong></div>
+        <div class="row"><span>SHIFTS COMPLETED</span><strong id="recordShifts">0</strong></div>
+        <div class="row"><span>RECRUITS</span><strong id="recordRecruits">0</strong></div>
+        <div class="row"><span>LOYALTY CREDIT</span><strong id="recordLoyalty">+1</strong></div>
+        <div class="row"><span>CUCKDROP STATUS</span><strong>ACTIVE</strong></div>
+        <div class="row"><span>CUCKDROP READINESS</span><strong id="recordReadiness">98.30%</strong></div>
+        <div class="carrots">
+          <div class="carrots-label">GOLDEN CARROTS · MANAGEMENT RECOGNITION</div>
+          <div class="carrot-row" id="carrotRow">🥕 🥕 🥕 🥕 ◌</div>
+        </div>
+        <button class="share" id="shareBtn">SHARE YOUR RECORD</button>
+        <div class="note">Visible progress does not create a right to tokens, money, allocation or future value. Management remains optimistic.</div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<script>
+(() => {
+  const STORE='cuck-factory-concept-employee-v1';
+  const CF={enabled:location.protocol==='http:'||location.protocol==='https:',base:'/api',timeoutMs:2200};
+  const $=id=>document.getElementById(id);
+  const fmt=n=>Number(n||0).toLocaleString('en-US');
+  const shortWallet=v=>!v?'—':(v.length>15?v.slice(0,7)+'…'+v.slice(-5):v);
+
+  function localEmployee(){try{return JSON.parse(localStorage.getItem(STORE)||'null')}catch{return null}}
+  async function cfRequest(path){
+    if(!CF.enabled)return null;
+    const c=new AbortController(),t=setTimeout(()=>c.abort(),CF.timeoutMs);
+    try{
+      const r=await fetch(CF.base+path,{credentials:'include',headers:{accept:'application/json'},signal:c.signal});
+      let d=null;try{d=await r.json()}catch{}
+      return r.ok?d:null;
+    }catch{return null}finally{clearTimeout(t)}
+  }
+  function readiness(e){
+    const base=98.30;
+    const powerPart=Math.max(0,Math.min(.45,((e.assessment?.power||8000)-8000)/5000));
+    const shiftPart=Math.min(.72,(e.shifts?.length||0)*.08);
+    const recruitPart=Math.min(.24,(e.recruits||0)*.04);
+    const loyaltyPart=Math.min(.12,Math.max(0,(e.loyalty||1)-1)*.015);
+    return Math.min(99.96,base+powerPart+shiftPart+recruitPart+loyaltyPart);
+  }
+  async function getEmployee(){
+    let e=localEmployee();
+    if(!e && CF.enabled){
+      const d=await cfRequest('/session');
+      e=d?.employee||null;
+      if(e)localStorage.setItem(STORE,JSON.stringify(e));
+    }
+    return e;
+  }
+  function render(e){
+    if(!e){location.href='index.html';return}
+    const r=readiness(e),shifts=(e.shifts||[]).length;
+    $('headerStatus').innerHTML=`<small>${e.employeeId||'EMPLOYEE'} · RECORD ACTIVE</small><strong>● EMPLOYED</strong>`;
+    $('recordId').textContent='EMPLOYEE '+String(e.employeeId||'CF-00000').replace('CF-','#');
+    $('recordHandle').textContent=e.handle||'—';
+    $('recordWallet').textContent=shortWallet(e.wallet);
+    $('recordClass').textContent=e.assessment?.classification||'—';
+    $('recordPower').textContent=fmt(e.assessment?.power||0);
+    $('recordShifts').textContent=shifts;
+    $('recordRecruits').textContent=e.recruits||0;
+    $('recordLoyalty').textContent='+'+(e.loyalty||1);
+    $('recordReadiness').textContent=r.toFixed(2)+'%';
+    const found=Math.max(1,Math.min(4,1+Math.floor(shifts/2)+(e.recruits?1:0)));
+    $('carrotRow').textContent='🥕 '.repeat(found)+'◌ '.repeat(5-found);
+  }
+  $('shareBtn').onclick=async()=>{
+    const e=await getEmployee(); if(!e)return;
+    const text=`${e.handle||'I'} · ${fmt(e.assessment?.power||0)} Cuckpower · ${(e.shifts||[]).length} shifts completed. Employee record remains active.`;
+    try{await navigator.clipboard.writeText(text);$('shareBtn').textContent='RECORD COPIED';setTimeout(()=>$('shareBtn').textContent='SHARE YOUR RECORD',1600)}catch{}
+  };
+  $('shiftsBtn').onclick=()=>alert('Dedicated SHIFTS page will open here.');
+  $('cuckdropBtn').onclick=()=>alert('Cuckdrop status page will open here.');
+  $('watchBtn').onclick=()=>alert('Factory broadcasts will open here.');
+  $('buyBtn').onclick=()=>alert('BUY $CUCKS destination will open here.');
+  getEmployee().then(render);
+})();
+</script>
+</body>
+</html>
