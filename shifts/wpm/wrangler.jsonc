@@ -1,0 +1,17 @@
+{
+  "name": "wpm",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-08-02",
+
+  "assets": {
+    "directory": "."
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "cuck-factory-leaderboard",
+      "database_id": "926686ac-5ddc-4af6-9a6f-ecb419493fac"
+    }
+  ]
+}
