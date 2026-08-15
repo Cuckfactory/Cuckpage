@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ansem's Cuck Factory — Shifts · Live D1</title>
+<link rel="preload" href="../Assets/cuck-factory-logo.png" as="image" type="image/png">
+<link rel="preload" href="../Assets/carrot.webp" as="image" type="image/webp">
+<script src="../config.js"></script>
+<style>
+:root{
+  --bg:#080504;--panel:#120b09;--panel2:#18100d;--cream:#f5ead0;--muted:#a98e72;
+  --red:#8f211b;--amber:#ca9440;--gold:#e3bd68;--green:#839867;--line:#4b3224;
+  --line2:#725039;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --serif:Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--cream)}
+body{font-family:var(--mono);background:
+  radial-gradient(circle at 50% -15%,rgba(132,55,30,.18),transparent 34%),
+  linear-gradient(#0c0806,#070403)}
+button{font:inherit;cursor:pointer}.hidden{display:none!important}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.11;
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 4px)}
+.site-header{position:sticky;top:0;z-index:50;display:grid;grid-template-columns:minmax(230px,auto) minmax(0,1fr) minmax(190px,auto);
+  min-height:72px;padding:0 22px;border-bottom:1px solid #5d3926;background:rgba(8,5,4,.975);backdrop-filter:blur(12px)}
+.brand-lockup{width:238px;align-self:center;padding-right:24px}
+.nav{display:flex;align-items:stretch;justify-content:center;color:#d8c7ab;font-size:10px;letter-spacing:.075em}
+.nav button{border:0;border-left:1px solid rgba(114,80,57,.34);background:transparent;color:inherit;min-width:112px;padding:0 17px;font-weight:700}
+.nav button:last-child{border-right:1px solid rgba(114,80,57,.34)}
+.nav button:hover,.nav button.active{color:var(--cream);background:rgba(138,74,33,.08)}
+.header-status{display:flex;flex-direction:column;justify-content:center;text-align:right;border-left:1px solid var(--line);padding-left:22px;margin-left:18px}
+.header-status small{color:#b59b7d;font-size:8px;letter-spacing:.15em}.header-status strong{color:var(--green);font-size:11px;letter-spacing:.08em;margin-top:5px}
+.page{width:min(1320px,100%);margin:auto;padding:52px 24px 70px}
+.eyebrow{font-size:9px;letter-spacing:.23em;color:var(--amber)}
+h1{font:400 clamp(48px,7vw,92px)/.9 var(--serif);letter-spacing:-.045em;margin:12px 0 13px}
+.lead{max-width:720px;color:#c8b294;font-size:12px;line-height:1.65}
+.summary{display:flex;gap:10px;flex-wrap:wrap;margin:25px 0 18px}
+.pill{border:1px solid var(--line);background:#100a08;padding:10px 13px;font-size:8px;letter-spacing:.12em;color:#a98e72}
+.pill strong{color:var(--cream);margin-left:8px}
+.shift-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:18px}
+.shift-card{position:relative;min-height:420px;border:1px solid var(--line2);background:linear-gradient(180deg,#19100c,#0d0806);overflow:hidden;display:flex;flex-direction:column}
+.shift-card.available{border-color:#96683a}
+.shift-image{height:185px;position:relative;background:#100a07;overflow:hidden;border-bottom:1px solid var(--line)}
+.shift-image img{width:100%;height:100%;object-fit:cover;filter:saturate(.78) brightness(.78)}
+.shift-image:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(8,5,4,.68))}
+.shift-body{padding:18px;display:flex;flex-direction:column;flex:1}
+.dept{font-size:8px;letter-spacing:.18em;color:var(--amber)}
+.shift-card h2{font:400 30px/1 var(--serif);margin:9px 0 8px}
+.shift-copy{color:#b59c80;font-size:10px;line-height:1.55;min-height:48px}
+.stats{margin-top:auto;padding-top:16px;display:grid;gap:7px}
+.statline{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #33221a;padding-top:8px;font-size:8px}
+.statline span{color:#87705d}.statline strong{color:#ead8b9}
+.launch{width:100%;margin-top:15px;border:1px solid #d1a15d;background:linear-gradient(#ad382f,#792019);color:#fff0d7;padding:14px;font-weight:900;letter-spacing:.1em}
+.launch:hover{filter:brightness(1.08)}
+.locked{opacity:.58;filter:saturate(.55)}
+.locked .shift-image{display:grid;place-items:center;font:italic 27px var(--serif);color:#927b63}
+.locked .launch{background:#17100d;border-color:#4b3224;color:#746253;cursor:not-allowed}
+.ribbon{position:absolute;right:-43px;top:31px;width:170px;text-align:center;transform:rotate(35deg);padding:7px;background:#5f1d18;color:#d7b9a1;font-size:7px;letter-spacing:.12em;z-index:3}
+.notice{margin-top:14px;padding:13px 15px;border-left:2px solid var(--amber);background:rgba(112,65,34,.13);font-size:9px;color:#aa9278;line-height:1.5}
+@media(max-width:950px){.shift-grid{grid-template-columns:1fr 1fr}.shift-card:last-child{grid-column:1/-1}}
+@media(max-width:700px){
+ .site-header{grid-template-columns:1fr auto;padding:8px 10px 0}.brand-lockup{width:185px;padding-bottom:8px}.header-status{border:0;margin:0;padding:0 0 8px 10px}
+ .nav{grid-column:1/-1;overflow-x:auto;justify-content:flex-start;border-top:1px solid rgba(114,80,57,.35)}.nav button{min-width:auto;padding:0 14px;min-height:42px;font-size:8px}
+ .page{padding:30px 12px 44px}.shift-grid{grid-template-columns:1fr}.shift-card:last-child{grid-column:auto}.shift-card{min-height:370px}
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <img class="brand-lockup" src="../Assets/cuck-factory-logo.png" alt="Ansem's Cuck Factory">
+  <nav class="nav">
+    <button onclick="location.href='../index.html'">HOME</button>
+    <button onclick="location.href='../employee-record.html'">EMPLOYEE RECORD</button>
+    <button class="active">SHIFTS</button>
+    <button id="cuckdropBtn">CUCKDROP</button>
+    <button id="watchBtn">WATCH</button>
+    <button id="buyBtn">BUY $CUCKS</button>
+  </nav>
+  <div class="header-status" id="headerStatus"><small>EMPLOYEE FILE</small><strong>● ACTIVE</strong></div>
+</header>
+
+<main class="page">
+  <div class="eyebrow">WORK ASSIGNMENTS · AUTHORIZED EMPLOYEES ONLY</div>
+  <h1>AVAILABLE<br>SHIFTS</h1>
+  <div class="lead">Complete assignments. Increase your permanent record. Management may use your recorded labour, scores and recruitment history when determining future eligibility.</div>
+
+  <div class="summary">
+    <div class="pill">EMPLOYEE <strong id="employeeHandle">@—</strong></div>
+    <div class="pill">CUCKDROP POINTS <strong id="cuckdropPoints">0</strong></div>
+    <div class="pill">TOTAL SHIFTS <strong id="totalShifts">0</strong></div>
+    <div class="pill">WPM BEST <strong id="wpmBest">—</strong></div>
+  </div>
+
+  <section class="shift-grid">
+    <article class="shift-card available">
+      <div class="shift-image"><img src="../Assets/carrot.webp" alt="Golden carrot"></div>
+      <div class="shift-body">
+        <div class="dept">DEPT. 01 · VOLUNTARY LABOUR</div>
+        <h2>WPM CUCK</h2>
+        <div class="shift-copy">Type Management's assignment faster than recorded workers. Accuracy counts. The carrot does not wait.</div>
+        <div class="stats">
+          <div class="statline"><span>BEST FACTORY SCORE</span><strong id="typingBest">—</strong></div>
+          <div class="statline"><span>COMPLETED SHIFTS</span><strong id="typingCount">0</strong></div>
+          <div class="statline"><span>STATUS</span><strong style="color:#8eaf70">AVAILABLE</strong></div>
+        </div>
+        <button class="launch" id="launchWpm">START SHIFT</button>
+      </div>
+    </article>
+
+    <article class="shift-card locked">
+      <div class="ribbon">ASSIGNMENT PENDING</div>
+      <div class="shift-image">CLASSIFIED</div>
+      <div class="shift-body">
+        <div class="dept">DEPT. 02 · COMMUNITY</div>
+        <h2>Next Requirement</h2>
+        <div class="shift-copy">Management is preparing an additional opportunity for unpaid productivity.</div>
+        <div class="stats"><div class="statline"><span>STATUS</span><strong>SOON™</strong></div></div>
+        <button class="launch" disabled>AWAIT ASSIGNMENT</button>
+      </div>
+    </article>
+
+    <article class="shift-card locked">
+      <div class="ribbon">ASSIGNMENT PENDING</div>
+      <div class="shift-image">CLASSIFIED</div>
+      <div class="shift-body">
+        <div class="dept">DEPT. 03 · CLASSIFIED</div>
+        <h2>Future Labour</h2>
+        <div class="shift-copy">This requirement has not yet been invented. Management remains confident it will be necessary.</div>
+        <div class="stats"><div class="statline"><span>STATUS</span><strong>SOON™</strong></div></div>
+        <button class="launch" disabled>AWAIT ASSIGNMENT</button>
+      </div>
+    </article>
+  </section>
+
+  <div class="notice">Only completed shifts are counted in your Employee Record. Opening a game is logged separately as assignment activity.</div>
+</main>
+
+<script>
+(() => {
+  const STORE='cuck-factory-concept-employee-v1';
+  const SESSION='cuck-factory-session-v1';
+  const API_BASE=(window.CUCK_FACTORY_CONFIG?.apiBase||'/api').replace(/\/$/,'');
+  const $=id=>document.getElementById(id);
+  const fmt=n=>Number(n||0).toLocaleString('en-US');
+
+  function sessionToken(){return localStorage.getItem(SESSION)||''}
+  function saveEmployee(e){localStorage.setItem(STORE,JSON.stringify(e))}
+  function clearLocalSession(){
+    localStorage.removeItem(SESSION);
+    localStorage.removeItem(STORE);
+  }
+
+  async function api(path,options={}){
+    const token=sessionToken();
+    if(!token)return {ok:false,status:401,data:null};
+    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),3200);
+    try{
+      const r=await fetch(API_BASE+'/'+String(path).replace(/^\//,''),{
+        credentials:'omit',
+        ...options,
+        headers:{
+          accept:'application/json',
+          authorization:'Bearer '+token,
+          ...(options.body?{'content-type':'application/json'}:{}),
+          ...(options.headers||{})
+        },
+        signal:controller.signal
+      });
+      let d=null;try{d=await r.json()}catch{}
+      return {ok:r.ok,status:r.status,data:d};
+    }catch{
+      return {ok:false,status:0,data:null};
+    }finally{
+      clearTimeout(timer);
+    }
+  }
+
+  async function event(type,detail={}){
+    if(!sessionToken())return;
+    const ev={
+      id:crypto?.randomUUID?.()||String(Date.now()+Math.random()),
+      type,
+      label:type.toUpperCase().replaceAll('_',' '),
+      detail,
+      at:new Date().toISOString()
+    };
+    await api('/events',{method:'POST',body:JSON.stringify({event:ev})});
+  }
+
+  async function restore(){
+    if(!sessionToken()){
+      location.href='../index.html';
+      return null;
+    }
+
+    let response=await api('/employee/me',{method:'GET'});
+    if(response.status===404){
+      response=await api('/session',{method:'GET'});
+    }
+
+    if(!response.ok){
+      if(response.status===401)clearLocalSession();
+      location.href='../index.html';
+      return null;
+    }
+
+    const e=response.data?.employee||response.data||null;
+    if(!e){
+      location.href='../index.html';
+      return null;
+    }
+
+    saveEmployee(e);
+    return e;
+  }
+
+  function gameSummary(e,gameId){
+    const games=e.games||{};
+    return games[gameId]||games[String(gameId)]||{};
+  }
+
+  function render(e){
+    const wpm=gameSummary(e,'wpm-cuck');
+    const best=Number(wpm.bestScore??wpm.bestFactoryScore??wpm.best??0);
+    const count=Number(wpm.shifts??wpm.count??0);
+    const total=Number(e.shiftsCompleted??0);
+    const points=Number(e.cuckdropPoints??e.cuckpower??0);
+
+    $('employeeHandle').textContent=e.handle||'@worker';
+    $('cuckdropPoints').textContent=fmt(points);
+    $('totalShifts').textContent=total;
+    $('typingCount').textContent=count;
+    $('typingBest').textContent=best?fmt(best)+' PTS':'—';
+    $('wpmBest').textContent=best?fmt(best):'—';
+    $('headerStatus').innerHTML=`<small>${e.employeeId||'EMPLOYEE'} · RECORD ACTIVE</small><strong>● EMPLOYED</strong>`;
+  }
+
+  $('launchWpm').onclick=async()=>{
+    await event('shift_opened',{gameId:'wpm-cuck',department:'voluntary-labour'});
+    location.href='wpm/';
+  };
+  $('cuckdropBtn').onclick=()=>location.href='../index.html#cuckdrop';
+  $('watchBtn').onclick=()=>alert('WATCH page coming soon.');
+  $('buyBtn').onclick=()=>alert('BUY $CUCKS destination coming soon.');
+
+  restore().then(e=>e&&render(e));
+})();
+</script>
+</body>
+</html>
