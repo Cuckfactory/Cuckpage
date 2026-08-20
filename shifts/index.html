@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ansem's Cuck Factory — Shifts · Live D1</title>
+<title>Ansem's Cuck Factory — Shifts Hub v2 · Live D1</title>
 <link rel="preload" href="../Assets/cuck-factory-logo.png" as="image" type="image/png">
 <link rel="preload" href="../Assets/carrot.webp" as="image" type="image/webp">
 <script src="../config.js"></script>
@@ -81,7 +81,7 @@ h1{font:400 clamp(48px,7vw,92px)/.9 var(--serif);letter-spacing:-.045em;margin:1
 </header>
 
 <main class="page">
-  <div class="eyebrow">WORK ASSIGNMENTS · AUTHORIZED EMPLOYEES ONLY</div>
+  <div class="eyebrow">SHIFT SELECTION HUB · WORK ASSIGNMENTS</div>
   <h1>AVAILABLE<br>SHIFTS</h1>
   <div class="lead">Complete assignments. Increase your permanent record. Management may use your recorded labour, scores and recruitment history when determining future eligibility.</div>
 
@@ -189,9 +189,22 @@ h1{font:400 clamp(48px,7vw,92px)/.9 var(--serif);letter-spacing:-.045em;margin:1
   }
 
   async function restore(){
+    // The Shifts page is a hub and should always remain visible.
+    // When a valid Factory session exists, hydrate it with live D1 data.
+    // When opened locally (file://) or without a session, keep the hub visible
+    // and fall back to the local employee cache for preview/testing.
+    let cached=null;
+    try{cached=JSON.parse(localStorage.getItem(STORE)||'null')}catch{}
+
     if(!sessionToken()){
-      location.href='../index.html';
-      return null;
+      return cached||{
+        employeeId:'PREVIEW',
+        handle:'@worker',
+        cuckpower:0,
+        cuckdropPoints:0,
+        shiftsCompleted:0,
+        games:{}
+      };
     }
 
     let response=await api('/employee/me',{method:'GET'});
@@ -199,20 +212,26 @@ h1{font:400 clamp(48px,7vw,92px)/.9 var(--serif);letter-spacing:-.045em;margin:1
       response=await api('/session',{method:'GET'});
     }
 
-    if(!response.ok){
-      if(response.status===401)clearLocalSession();
-      location.href='../index.html';
-      return null;
+    if(response.ok){
+      const e=response.data?.employee||response.data||null;
+      if(e){
+        saveEmployee(e);
+        return e;
+      }
     }
 
-    const e=response.data?.employee||response.data||null;
-    if(!e){
-      location.href='../index.html';
-      return null;
-    }
+    // Do not redirect the user away from the hub if the API is temporarily
+    // unavailable. Only clear a definitively invalid session.
+    if(response.status===401)clearLocalSession();
 
-    saveEmployee(e);
-    return e;
+    return cached||{
+      employeeId:'OFFLINE',
+      handle:'@worker',
+      cuckpower:0,
+      cuckdropPoints:0,
+      shiftsCompleted:0,
+      games:{}
+    };
   }
 
   function gameSummary(e,gameId){
@@ -233,11 +252,15 @@ h1{font:400 clamp(48px,7vw,92px)/.9 var(--serif);letter-spacing:-.045em;margin:1
     $('typingCount').textContent=count;
     $('typingBest').textContent=best?fmt(best)+' PTS':'—';
     $('wpmBest').textContent=best?fmt(best):'—';
-    $('headerStatus').innerHTML=`<small>${e.employeeId||'EMPLOYEE'} · RECORD ACTIVE</small><strong>● EMPLOYED</strong>`;
+    const live=!!sessionToken() && !['PREVIEW','OFFLINE'].includes(String(e.employeeId||''));
+    $('headerStatus').innerHTML=live
+      ? `<small>${e.employeeId||'EMPLOYEE'} · RECORD ACTIVE</small><strong>● EMPLOYED</strong>`
+      : `<small>SHIFTS HUB · PREVIEW</small><strong style="color:#ca9440">● HUB AVAILABLE</strong>`;
   }
 
-  $('launchWpm').onclick=async()=>{
-    await event('shift_opened',{gameId:'wpm-cuck',department:'voluntary-labour'});
+  $('launchWpm').onclick=()=>{
+    // Never block navigation on analytics/event logging.
+    event('shift_opened',{gameId:'wpm-cuck',department:'voluntary-labour'}).catch(()=>{});
     location.href='wpm/';
   };
   $('cuckdropBtn').onclick=()=>location.href='../index.html#cuckdrop';
