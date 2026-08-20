@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <script src="../../config.js"></script>
-<title>Cuck Factory — WPM CUCK Shift · Employee Linked v2</title>
+<title>Cuck Factory — WPM CUCK Shift · Employee Linked v3</title>
 <style>
 :root{
   --bg:#0a0605;
@@ -2601,25 +2601,58 @@ body.modal-open{overflow:hidden}
     portalApi("/events",{method:"POST",body:JSON.stringify({event})});
   }
   async function restoreEmployeeForGame(){
+    // Prefer the permanent Factory session + live D1 data.
+    // Do not immediately throw the player back to the homepage when local
+    // previewing or when one API endpoint temporarily fails.
+    let cached=employeeLoad();
+
     if(!sessionToken()){
-      location.href="../../index.html";
-      return null;
+      // file:// preview/testing can still open the game UI.
+      // Hosted users without a session are allowed to see the game,
+      // but score submission will still require authentication server-side.
+      activeEmployee=cached||{
+        employeeId:"PREVIEW",
+        handle:"@worker",
+        cuckpower:0,
+        cuckdropPoints:0,
+        shiftsCompleted:0,
+        games:{}
+      };
+      return activeEmployee;
     }
 
-    const remote=await portalApi("/session",{method:"GET"});
-    const e=remote?.ok ? remote.data?.employee : null;
+    // Match the Employee Record / Shifts Hub logic:
+    // /employee/me is authoritative; /session is a compatibility fallback.
+    let remote=await portalApi("/employee/me",{method:"GET"});
+    if(remote?.status===404 || !remote?.ok){
+      const fallback=await portalApi("/session",{method:"GET"});
+      if(fallback?.ok) remote=fallback;
+      else if(remote?.status!==401) remote=fallback;
+    }
 
-    if(!e){
-      // Never run an employee shift from a stale local cache.
-      localStorage.removeItem(EMPLOYEE_STORE);
+    const e=remote?.ok ? (remote.data?.employee||remote.data||null) : null;
+
+    if(e){
+      employeeSave(e);
+      activeEmployee=e;
+      return e;
+    }
+
+    // Only clear a definitely invalid session.
+    if(remote?.status===401){
       localStorage.removeItem(SESSION_STORE);
-      location.href="../../index.html";
-      return null;
     }
 
-    employeeSave(e);
-    activeEmployee=e;
-    return e;
+    // Keep the game visible instead of redirecting away.
+    activeEmployee=cached||{
+      employeeId:"OFFLINE",
+      handle:"@worker",
+      cuckpower:0,
+      cuckdropPoints:0,
+      shiftsCompleted:0,
+      games:{}
+    };
+    return activeEmployee;
   }
 
   const posts = [
@@ -4132,7 +4165,7 @@ Management says: soon™`;
     const carrot=carrotStateFor(lastResult);
     const hostedGameUrl = location.protocol === "http:" || location.protocol === "https:"
       ? location.href.split(/[?#]/)[0]
-      : "https://puddingflap.github.io/cuckfactory/";
+      : "https://cuckfactory.github.io/Cuckpage/shifts/wpm/";
 
     const challenge=`I finished my shift at Ansem's Cuck Factory.
 
